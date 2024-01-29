@@ -1,0 +1,52 @@
+{
+  "id": "styles/index.css",
+  "dependencies": [
+    {
+      "name": "_css_loader",
+      "parent": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\src\\styles\\index.css",
+      "resolved": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js"
+    },
+    {
+      "name": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\package.json",
+      "includedInParent": true,
+      "mtime": 1706547551616
+    }
+  ],
+  "generated": {
+    "css": "@tailwind base;\r\n@tailwind components;\r\n@tailwind utilities;\r\n",
+    "js": "var reloadCSS = require('_css_loader');\nmodule.hot.dispose(reloadCSS);\nmodule.hot.accept(reloadCSS);"
+  },
+  "sourceMaps": {
+    "css": {
+      "mappings": [
+        {
+          "source": "styles/index.css",
+          "original": { "line": 1, "column": 0 },
+          "generated": { "line": 1, "column": 0 }
+        },
+        {
+          "source": "styles/index.css",
+          "original": { "line": 2, "column": 0 },
+          "generated": { "line": 2, "column": 0 }
+        },
+        {
+          "source": "styles/index.css",
+          "original": { "line": 3, "column": 0 },
+          "generated": { "line": 3, "column": 0 }
+        },
+        {
+          "source": "styles/index.css",
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 4, "column": 0 }
+        }
+      ],
+      "sources": {
+        "styles/index.css": "@tailwind base;\r\n@tailwind components;\r\n@tailwind utilities;\r\n"
+      },
+      "lineCount": 4
+    }
+  },
+  "error": null,
+  "hash": "a0c865b60d1baa3d66cf1845a58a994e",
+  "cacheData": { "env": {} }
+}

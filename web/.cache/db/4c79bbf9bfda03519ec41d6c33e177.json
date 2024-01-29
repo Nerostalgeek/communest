@@ -1,0 +1,349 @@
+{
+  "id": "App.tsx",
+  "dependencies": [
+    {
+      "name": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\tsconfig.json",
+      "includedInParent": true,
+      "mtime": 1706546623551
+    },
+    {
+      "name": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\package.json",
+      "includedInParent": true,
+      "mtime": 1706547551616
+    },
+    {
+      "name": "./styles/index.css",
+      "loc": { "line": 1, "column": 7, "index": 7 },
+      "parent": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\src\\App.tsx",
+      "resolved": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\src\\styles\\index.css"
+    },
+    {
+      "name": "react",
+      "loc": { "line": 2, "column": 18, "index": 47 },
+      "parent": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\src\\App.tsx",
+      "resolved": "C:\\Users\\neros\\Documents\\Projects\\CommuNest-Monorepo\\web\\node_modules\\react\\index.js"
+    }
+  ],
+  "generated": {
+    "js": "\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.App = void 0;\nrequire(\"./styles/index.css\");\nvar _react = _interopRequireDefault(require(\"react\"));\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\nvar App = exports.App = function App() {\n  return _react.default.createElement(\"div\", null, \"Je suis la page de base mec, va falloir booser maintenant !\");\n};"
+  },
+  "sourceMaps": {
+    "js": {
+      "mappings": [
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 1, "column": 0 },
+          "generated": { "line": 7, "column": 0 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 1, "column": 0 },
+          "generated": { "line": 7, "column": 7 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 8, "column": 0 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 8, "column": 4 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 8, "column": 10 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 8, "column": 13 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 8, "column": 35 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 8, "column": 36 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 0 },
+          "generated": { "line": 8, "column": 43 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 0 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 9 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 32 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 35 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 46 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 49 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 53 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 56 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 57 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 67 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 70 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 73 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 78 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 85 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 87 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 4, "column": 26 },
+          "generated": { "line": 9, "column": 90 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 7 },
+          "generated": { "line": 10, "column": 0 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 13 },
+          "generated": { "line": 10, "column": 4 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 16 },
+          "generated": { "line": 10, "column": 7 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 16 },
+          "generated": { "line": 10, "column": 10 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 16 },
+          "generated": { "line": 10, "column": 17 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 16 },
+          "generated": { "line": 10, "column": 18 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 16 },
+          "generated": { "line": 10, "column": 21 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 29 },
+          "generated": { "line": 10, "column": 24 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 13 },
+          "generated": { "line": 10, "column": 33 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 16 },
+          "generated": { "line": 10, "column": 36 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 16 },
+          "generated": { "line": 10, "column": 37 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 8, "column": 34 },
+          "generated": { "line": 10, "column": 39 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 4 },
+          "generated": { "line": 11, "column": 2 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 9 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 23 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 24 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 37 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 38 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 43 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 45 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 49 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 51 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 11 },
+          "generated": { "line": 11, "column": 112 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 9, "column": 81 },
+          "generated": { "line": 11, "column": 113 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 10, "column": 0 },
+          "generated": { "line": 12, "column": 0 }
+        },
+        {
+          "source": "App.tsx",
+          "name": null,
+          "original": { "line": 10, "column": 1 },
+          "generated": { "line": 12, "column": 1 }
+        }
+      ],
+      "sources": {
+        "App.tsx": "import './styles/index.css';\r\n\r\n\r\nimport React from \"react\";\r\nimport ReactDOM from \"react-dom\";\r\n\r\n\r\nexport const App: React.FC = () => {\r\n    return <div>Je suis la page de base mec, va falloir booser maintenant !</div>\r\n}"
+      },
+      "lineCount": null
+    }
+  },
+  "error": null,
+  "hash": "b5c03866f1aa8921f3c05b3b316a7d43",
+  "cacheData": { "env": {} }
+}
