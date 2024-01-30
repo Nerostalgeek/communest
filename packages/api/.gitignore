@@ -1,0 +1,6 @@
+# Rust build artifacts
+target/
+
+# Other files and directories to ignore
+.DS_Store
+.vscode/
