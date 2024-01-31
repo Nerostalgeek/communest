@@ -2,15 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  --text-color-normal: #1a202c; /* dark text color for light mode */
-  --text-color-dark: #f7fafc; /* light text color for dark mode */
-}
+/* Define color variables for light and dark modes */
+:root {
+  /* Light mode colors */
+  --color-text-primary-light: #1f2937; /* Dark text for light background */
+  --color-background-light: #f8fafc;   /* Light background */
 
-body {
-  color: var(--text-color-normal);
-}
-
-body.dark {
-  color: var(--text-color-dark);
+  /* Dark mode colors */
+  --color-text-primary-dark: #f8fafc;   /* Light text for dark background */
+  --color-background-dark: #1f2937;     /* Dark background */
 }

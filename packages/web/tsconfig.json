@@ -1,0 +1,12 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": "./src"
+      // Add any other web-specific TypeScript options here
+    },
+    "include": [
+      "./src/**/*"
+    ]
+  }
+  

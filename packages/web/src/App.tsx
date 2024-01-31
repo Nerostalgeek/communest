@@ -24,10 +24,17 @@ const App: React.FC = () => {
 
   // Effect to apply or remove the dark mode class on the body element
   useEffect(() => {
-    document.body.className = darkMode ? 'dark' : '';
-    // Save the user's preference to localStorage
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-  }, [darkMode]);
+    // Check for user preference or system theme
+    const darkMode =
+      localStorage.getItem('darkMode') === 'true' ||
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (darkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, []);
 
   // Toggle dark mode
   const toggleDarkMode = () => setDarkMode(!darkMode);

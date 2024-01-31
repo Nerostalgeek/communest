@@ -1,20 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+
+import { theme } from '@communest-monorepo/shared/src/theme';
 export default {
   darkMode: 'media',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      colors: {
-        primary: '#007bff',
-        secondary: '#ff6b6b',
-        accent: '#adb5bd',
-        background: {
-          light: '#e7f5ff',
-          dark: '#343a40',
-        },
-        textLight: '#343a40',
-        textDark: '#f8f9fa',
-      },
+      colors: theme.colors,
     },
   },
   variants: {
