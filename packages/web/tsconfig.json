@@ -6,6 +6,8 @@
       // Add any other web-specific TypeScript options here
     },
     "include": [
+      "./postcss.config.js",
+      "./vite.config.ts",
       "./src/**/*"
     ]
   }

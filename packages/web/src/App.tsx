@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Import your components
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import LoginPage from './pages/auth/LoginPage';
-import SignupPage from './pages/auth/SignupPage';
-import WelcomePage from './pages/WelcomePage';
+import HomePage from './Pages/HomePage';
+import AboutPage from './Pages/AboutPage';
+import LoginPage from './Pages/auth/LoginPage';
+import SignupPage from './Pages/auth/SignupPage';
+import WelcomePage from './Pages/WelcomePage';
 // Import other pages or components as needed
 
 const App: React.FC = () => {
