@@ -5,29 +5,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          light: '#F3A712', // Warm yellow
-          DEFAULT: '#E9A115', // Deep yellow
-          dark: '#DB9200', // Mustard yellow
-        },
-        secondary: {
-          light: '#F2CC8F', // Soft orange
-          DEFAULT: '#E4B363', // Earthy orange
-          dark: '#D9A53D', // Deep orange
-        },
-        accent: {
-          light: '#81B29A', // Teal
-          DEFAULT: '#709A89', // Dark teal
-          dark: '#5E8273', // Deeper teal
-        },
+        primary: '#007bff',
+        secondary: '#ff6b6b',
+        accent: '#adb5bd',
         background: {
-          light: '#FEFBF6', // Off-white
-          dark: '#2B2D42', // Dark blue-gray
+          light: '#e7f5ff',
+          dark: '#343a40',
         },
-        textLight: {
-          light: '#2B2D42', // Dark blue-gray
-          dark: '#FEFBF6', // Off-white
-        },
+        textLight: '#343a40',
+        textDark: '#f8f9fa',
       },
     },
   },
