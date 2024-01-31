@@ -1,4 +1,5 @@
 {
+  "root": true,
   "env": {
     "browser": true,
     "es2021": true,
@@ -8,26 +9,26 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 12,
+    "ecmaVersion": 13,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
   "plugins": [
     "react",
     "@typescript-eslint",
-    "react-hooks"
+    "prettier"
   ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "react/jsx-uses-react": "off",
-    "react/jsx-uses-vars": "on"
+    "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off"
   },
   "settings": {
     "react": {

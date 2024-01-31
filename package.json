@@ -6,9 +6,6 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "lerna": "^8.0.2",
-    "yarn": "^1.22.21"
+    "lerna": "^8.0.2"
   }
 }

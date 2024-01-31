@@ -4,17 +4,31 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      // Custom color scheme
       colors: {
-        primary: '#005f73', // Teal Blue
-        secondary: '#e29578', // Soft Orange
-        accent: '#e63946', // Bright Red
-        darkAccent: '#a8dadc', // Soft Cyan
-        background: '#f1faee', // Light Ivory
-        darkBackground: '#1d3557', // Dark Navy
-        gray: '#6d6875', // Neutral Gray
+        primary: {
+          light: '#F3A712', // Warm yellow
+          DEFAULT: '#E9A115', // Deep yellow
+          dark: '#DB9200', // Mustard yellow
+        },
+        secondary: {
+          light: '#F2CC8F', // Soft orange
+          DEFAULT: '#E4B363', // Earthy orange
+          dark: '#D9A53D', // Deep orange
+        },
+        accent: {
+          light: '#81B29A', // Teal
+          DEFAULT: '#709A89', // Dark teal
+          dark: '#5E8273', // Deeper teal
+        },
+        background: {
+          light: '#FEFBF6', // Off-white
+          dark: '#2B2D42', // Dark blue-gray
+        },
+        textLight: {
+          light: '#2B2D42', // Dark blue-gray
+          dark: '#FEFBF6', // Off-white
+        },
       },
-      // Additional customizations can be made here
     },
   },
   variants: {
