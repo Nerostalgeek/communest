@@ -28,7 +28,8 @@
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "prettier/prettier": "error",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
   },
   "settings": {
     "react": {

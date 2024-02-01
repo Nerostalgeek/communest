@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
+import CommunestLogo from './icons/CommunestLogo';
 interface HeaderProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
@@ -14,7 +14,9 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo and Title */}
         <div className="flex items-center">
-          <img src="/logo.svg" alt="Communest Logo" className="h-12 mr-3" />
+          <div className="h-12 mr-3">
+            <CommunestLogo className="logo" />
+          </div>
           <h1 className="text-xl font-bold">Communest</h1>
         </div>
 

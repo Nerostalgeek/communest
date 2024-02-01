@@ -11,4 +11,10 @@
   /* Dark mode colors */
   --color-text-primary-dark: #f8fafc;   /* Light text for dark background */
   --color-background-dark: #1f2937;     /* Dark background */
+  
+}
+
+.logo {
+  width: 3rem;
+  height: 3rem;
 }
