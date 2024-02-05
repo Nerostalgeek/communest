@@ -16,6 +16,8 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // database connection pool
+    // let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     HttpServer::new(|| {
         App::new()
             .service(hello)

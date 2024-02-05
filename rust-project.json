@@ -1,0 +1,25 @@
+{
+    "roots": [
+      {
+        "crateId": 0,
+        "isWorkspaceMember": true,
+        "includeDirs": ["./packages/api/src"],
+        "excludeDirs": [],
+        "edition": "2021",
+        "dependencies": []
+      }
+    ],
+    "crates": [
+      {
+        "root_module": "./packages/api/src/main.rs",
+        "edition": "2021",
+        "deps": [],
+        "atomCrate": false,
+        "dependencies": [],
+        "cfg": [],
+        "env": {},
+        "target": "x86_64-pc-windows-gnu"
+      }
+    ]
+  }
+  
