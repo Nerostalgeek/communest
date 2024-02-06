@@ -6,4 +6,10 @@
       "*.rs": "rust"
     },
     "rust-analyzer.procMacro.enable": true,
+
+    
+    "rust-analyzer.linkedProjects": [
+      "./packages/api/Cargo.toml"
+    ]    
   }
+  
