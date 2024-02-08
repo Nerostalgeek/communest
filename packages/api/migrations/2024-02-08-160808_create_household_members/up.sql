@@ -1,4 +1,4 @@
-CREATE TABLE household_members (
+CREATE TABLE IF NOT EXISTS household_members (
     member_id SERIAL PRIMARY KEY,
     household_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,

@@ -1,1 +1,0 @@
-DROP TABLE household_members;
