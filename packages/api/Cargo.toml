@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 dotenv = "0.15.0"
+jsonwebtoken = "9.0.2"
+diesel = { version = "2.1.4", features = ["r2d2", "postgres"] }
+serde = "1.0.196"

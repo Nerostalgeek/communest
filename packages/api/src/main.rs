@@ -1,30 +1,25 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{web, App, HttpServer};
+use std::io;
 
-#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
-}
+mod config;
+mod handlers;
+mod models;
+mod routes;
 
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
-
-async fn manual_hello() -> impl Responder {
-    HttpResponse::Ok().body("Hey there!")
-}
+use crate::config::db;
 
 #[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    // database connection pool
-    // let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    HttpServer::new(|| {
+async fn main() -> io::Result<()> {
+    // Initialize database pool
+    let pool = db::init_database_pool("DATABASE_URL");
+
+    // Start HTTP server
+    HttpServer::new(move || {
         App::new()
-            .service(hello)
-            .service(echo)
-            .route("/hey", web::get().to(manual_hello))
+            .data(pool.clone()) // Pass database pool to handlers
+            .configure(routes::config)
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind("127.0.0.1:8080")?
     .run()
     .await
 }

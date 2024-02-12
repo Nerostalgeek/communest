@@ -19,6 +19,7 @@
     "allowImportingTsExtensions": true
   },
   "include": [
-    "packages/*/src/**/*"
+    "packages/web/src/**/*",
+    "packages/shared/src/**/*"
   ]
 }
