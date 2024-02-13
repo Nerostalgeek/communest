@@ -5,6 +5,8 @@ mod config;
 mod handlers;
 mod models;
 mod routes;
+mod schema;
+mod services;
 
 use crate::config::db;
 
