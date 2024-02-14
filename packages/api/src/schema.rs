@@ -11,8 +11,8 @@ pub mod sql_types {
 }
 
 diesel::table! {
-    events (event_id) {
-        event_id -> Int4,
+    events (id) {
+        id -> Int4,
         household_id -> Int4,
         #[max_length = 255]
         title -> Varchar,
@@ -25,8 +25,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    expenses (expense_id) {
-        expense_id -> Int4,
+    expenses (id) {
+        id -> Int4,
         amount -> Numeric,
         #[max_length = 255]
         description -> Varchar,
@@ -38,8 +38,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    household_members (member_id) {
-        member_id -> Int4,
+    household_members (id) {
+        id -> Int4,
         household_id -> Int4,
         user_id -> Int4,
         #[max_length = 255]
@@ -52,8 +52,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    households (household_id) {
-        household_id -> Int4,
+    households (id) {
+        id -> Int4,
         #[max_length = 255]
         name -> Varchar,
         #[max_length = 255]
@@ -64,8 +64,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    messages (message_id) {
-        message_id -> Int4,
+    messages (id) {
+        id -> Int4,
         sender_id -> Int4,
         household_id -> Int4,
         content -> Text,
@@ -78,8 +78,8 @@ diesel::table! {
     use diesel::sql_types::*;
     use super::sql_types::ReimbursementStatus;
 
-    reimbursements (reimbursement_id) {
-        reimbursement_id -> Int4,
+    reimbursements (id) {
+        id -> Int4,
         expense_id -> Int4,
         payer_id -> Int4,
         beneficiary_id -> Int4,
@@ -93,8 +93,8 @@ diesel::table! {
     use diesel::sql_types::*;
     use super::sql_types::TaskStatus;
 
-    tasks (task_id) {
-        task_id -> Int4,
+    tasks (id) {
+        id -> Int4,
         #[max_length = 255]
         description -> Nullable<Varchar>,
         assigned_to -> Nullable<Int4>,
@@ -106,8 +106,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    users (user_id) {
-        user_id -> Int4,
+    users (id) {
+        id -> Int4,
         #[max_length = 255]
         last_name -> Varchar,
         #[max_length = 255]
