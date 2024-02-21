@@ -1,0 +1,6 @@
+[argon2]
+memory = 65536
+passes = 10
+parallelism = 4
+salt_length = 16
+hash_length = 32

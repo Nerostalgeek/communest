@@ -8,9 +8,15 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 argon2 = "0.5.3"
-chrono = "0.4.34"
-diesel = { version = "2.1.4", features = ["r2d2", "postgres"] }
+chrono = { version = "0.4.34", features = ["serde"] }
+diesel = { version = "2.1.4", features = [
+    "r2d2",
+    "postgres",
+    "chrono",
+    "uuid",
+] }
 dotenv = "0.15.0"
 jsonwebtoken = "9.0.2"
 rand = "0.8.5"
 serde = "1.0.196"
+tokio = "1.36.0"

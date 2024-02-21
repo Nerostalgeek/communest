@@ -1,33 +1,24 @@
+use crate::schema::users;
 use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
-#[derive(Queryable, Serialize)]
+#[derive(Queryable, Serialize, Deserialize)]
 pub struct User {
-    pub user_id: i32,
-    pub username: String,
-    pub email: String,
+    pub id: i32,
     pub last_name: String,
     pub first_name: String,
-    pub phone_number: String,
+    pub email: String,
+    pub phone_number: Option<String>,
     pub password_hash: String,
-    pub created_at: NaiveDateTime,
+    pub created_at: Option<NaiveDateTime>,
 }
 
 #[derive(Insertable, Deserialize)]
-#[table_name = "users"]
-pub struct NewUser<'req> {
-    pub username: &'req str,
-    pub email: &'req str,
-    pub last_name: &'req str,
-    pub first_name: &'req str,
-    pub phone_number: &'req str,
-    pub password_hash: &'req str,
-}
-
-pub fn create_user<'req>(conn: &PgConnection, new_user: NewUser<'req>) -> QueryResult<User> {
-    use crate::schema::users;
-
-    diesel::insert_into(users::table)
-        .values(&new_user)
-        .get_result(conn)
+#[diesel(table_name = users)]
+pub struct NewUser {
+    pub last_name: String,
+    pub first_name: String,
+    pub email: String,
+    pub phone_number: Option<String>, // Consider making this Option<String> if it can be absent
+    pub password_hash: String,
 }
