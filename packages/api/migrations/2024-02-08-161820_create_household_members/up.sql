@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS household_members (
     id SERIAL PRIMARY KEY,
-    household_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
+    household_id UUID NOT NULL,
+    user_id UUID NOT NULL,
     nickname VARCHAR(255),
     role VARCHAR(255),
     date_added TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,

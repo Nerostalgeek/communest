@@ -2,8 +2,8 @@ CREATE TYPE reimbursement_status AS ENUM ('Pending', 'Completed');
 CREATE TABLE IF NOT EXISTS reimbursements(
     id SERIAL PRIMARY KEY,
     expense_id INTEGER NOT NULL,
-    payer_id INTEGER NOT NULL,
-    beneficiary_id INTEGER NOT NULL,
+    payer_id UUID NOT NULL,
+    beneficiary_id UUID NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
     status reimbursement_status NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -8,8 +8,8 @@ CREATE TYPE task_status AS ENUM (
 CREATE TABLE IF NOT EXISTS tasks (
     id SERIAL PRIMARY KEY,
     description VARCHAR(255),
-    assigned_to INTEGER,
-    household_id INTEGER,
+    assigned_to UUID,
+    household_id UUID,
     due_date TIMESTAMP,
     status task_status,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

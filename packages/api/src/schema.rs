@@ -13,13 +13,13 @@ pub mod sql_types {
 diesel::table! {
     events (id) {
         id -> Int4,
-        household_id -> Int4,
+        household_id -> Uuid,
         #[max_length = 255]
         title -> Varchar,
         #[max_length = 255]
         description -> Varchar,
         event_date -> Timestamp,
-        created_by -> Int4,
+        created_by -> Uuid,
         created_at -> Nullable<Timestamp>,
     }
 }
@@ -30,8 +30,8 @@ diesel::table! {
         amount -> Numeric,
         #[max_length = 255]
         description -> Varchar,
-        payer_id -> Int4,
-        household_id -> Int4,
+        payer_id -> Uuid,
+        household_id -> Uuid,
         expense_date -> Nullable<Timestamp>,
         created_at -> Nullable<Timestamp>,
     }
@@ -40,8 +40,8 @@ diesel::table! {
 diesel::table! {
     household_members (id) {
         id -> Int4,
-        household_id -> Int4,
-        user_id -> Int4,
+        household_id -> Uuid,
+        user_id -> Uuid,
         #[max_length = 255]
         nickname -> Nullable<Varchar>,
         #[max_length = 255]
@@ -53,12 +53,12 @@ diesel::table! {
 
 diesel::table! {
     households (id) {
-        id -> Int4,
+        id -> Uuid,
         #[max_length = 255]
         name -> Varchar,
         #[max_length = 255]
         address -> Varchar,
-        created_by -> Int4,
+        created_by -> Uuid,
         created_at -> Nullable<Timestamp>,
     }
 }
@@ -66,8 +66,8 @@ diesel::table! {
 diesel::table! {
     messages (id) {
         id -> Int4,
-        sender_id -> Int4,
-        household_id -> Int4,
+        sender_id -> Uuid,
+        household_id -> Uuid,
         content -> Text,
         sent_at -> Nullable<Timestamp>,
         created_at -> Nullable<Timestamp>,
@@ -81,8 +81,8 @@ diesel::table! {
     reimbursements (id) {
         id -> Int4,
         expense_id -> Int4,
-        payer_id -> Int4,
-        beneficiary_id -> Int4,
+        payer_id -> Uuid,
+        beneficiary_id -> Uuid,
         amount -> Numeric,
         status -> ReimbursementStatus,
         created_at -> Nullable<Timestamp>,
@@ -97,8 +97,8 @@ diesel::table! {
         id -> Int4,
         #[max_length = 255]
         description -> Nullable<Varchar>,
-        assigned_to -> Nullable<Int4>,
-        household_id -> Nullable<Int4>,
+        assigned_to -> Nullable<Uuid>,
+        household_id -> Nullable<Uuid>,
         due_date -> Nullable<Timestamp>,
         status -> Nullable<TaskStatus>,
         created_at -> Nullable<Timestamp>,
@@ -107,7 +107,7 @@ diesel::table! {
 
 diesel::table! {
     users (id) {
-        id -> Int4,
+        id -> Uuid,
         #[max_length = 255]
         last_name -> Varchar,
         #[max_length = 255]
@@ -118,6 +118,9 @@ diesel::table! {
         phone_number -> Nullable<Varchar>,
         #[max_length = 255]
         password_hash -> Varchar,
+        is_verified -> Bool,
+        verification_token -> Nullable<Uuid>,
+        token_expires_at -> Nullable<Timestamp>,
         created_at -> Nullable<Timestamp>,
     }
 }
