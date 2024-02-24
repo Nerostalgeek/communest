@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash VARCHAR(255) NOT NULL,
     is_verified BOOLEAN NOT NULL DEFAULT FALSE,
     verification_token UUID,
-    token_expires_at TIMESTAMP,
+    token_expires_at TIMESTAMPTZ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )

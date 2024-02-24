@@ -1,16 +1,18 @@
 use crate::{
     config::db::{get_db_connection, DbPool},
-    models::user::{NewUser, User},
+    models::user::{CreateUserRequest, NewUser, User},
     schema::users,
 };
-
+use actix_web::cookie::time::Duration;
 use argon2::{
     password_hash::{rand_core::OsRng, SaltString},
     Argon2, PasswordHasher,
 };
+use chrono::{Duration, Utc};
 use diesel::prelude::*;
 use diesel::result::{DatabaseErrorKind, Error as DieselError};
 use std::sync::Arc;
+use uuid::Uuid;
 
 pub struct UserService {
     pool: Arc<DbPool>, // Use Arc for thread-safe sharing
@@ -21,17 +23,27 @@ impl UserService {
         UserService { pool }
     }
 
-    pub async fn create_user(&self, mut new_user: NewUser) -> Result<User, UserServiceError> {
+    pub async fn create_user(
+        &self,
+        mut request: CreateUserRequest,
+    ) -> Result<User, UserServiceError> {
         let mut conn = get_db_connection(self.pool.clone()).await?;
 
-        let password_hash = UserService::hash_password(&new_user.password_hash)
+        let password_hash = UserService::hash_password(&request.password)
             .map_err(|_| UserServiceError::InternalServerError)?;
 
-        new_user.password_hash = password_hash;
+        let new_user = NewUser {
+            last_name: request.last_name,
+            first_name: request.first_name,
+            email: request.email,
+            phone_number: request.phone_number,
+            password_hash,
+            verification_token: Uuid::new_v4(),
+            token_expires_at: Utc::now() + Duration::hours(24),
+        };
 
-        // Insert the new user into the database
         let created_user = diesel::insert_into(users::table)
-            .values(&new_user)
+            .values(new_user)
             .get_result(&mut conn)
             .map_err(|e| UserServiceError::from(e))?;
 

@@ -120,7 +120,7 @@ diesel::table! {
         password_hash -> Varchar,
         is_verified -> Bool,
         verification_token -> Nullable<Uuid>,
-        token_expires_at -> Nullable<Timestamp>,
+        token_expires_at -> Nullable<Timestamptz>,
         created_at -> Nullable<Timestamp>,
     }
 }

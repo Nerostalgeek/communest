@@ -20,4 +20,4 @@ jsonwebtoken = "9.0.2"
 rand = "0.8.5"
 serde = "1.0.196"
 tokio = "1.36.0"
-uuid = { version = "1.7.0", features = ["serde"] }
+uuid = { version = "1.7.0", features = ["v4", "serde"] }

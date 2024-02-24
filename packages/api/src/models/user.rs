@@ -1,5 +1,5 @@
 use crate::schema::users;
-use chrono::NaiveDateTime;
+use chrono::{DateTime, NaiveDateTime, Utc};
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -13,7 +13,7 @@ pub struct User {
     pub password_hash: String,
     pub is_verified: bool,
     pub verification_token: Option<Uuid>,
-    pub token_expires_at: Option<NaiveDateTime>,
+    pub token_expires_at: Option<DateTime<Utc>>,
     pub created_at: Option<NaiveDateTime>,
 }
 
@@ -25,6 +25,16 @@ pub struct NewUser {
     pub email: String,
     pub phone_number: Option<String>,
     pub password_hash: String,
+    // Note: Removed verification_token and token_expires_at from this struct
+}
+
+#[derive(Deserialize)]
+pub struct CreateUserRequest {
+    pub last_name: String,
+    pub first_name: String,
+    pub email: String,
+    pub phone_number: Option<String>,
+    pub password: String, // This is the raw password, which will be hashed in the service layer
 }
 #[derive(Insertable, Deserialize)]
 #[diesel(table_name = users)]

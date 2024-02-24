@@ -9,6 +9,7 @@ pub async fn register_user(
     pool: web::Data<DbPool>,
     new_user: web::Json<NewUser>,
 ) -> impl Responder {
+    // This syntax might be used to emphasize that we're cloning the Arc, not the data inside it, but in practice, we can just use Arc::clone(&pool) for clarity.
     let user_service = UserService::new(Arc::clone(&(*pool)));
     match user_service.create_user(new_user.into_inner()).await {
         Ok(user) => HttpResponse::Ok().json(user),
