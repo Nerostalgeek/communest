@@ -121,7 +121,8 @@ diesel::table! {
         is_verified -> Bool,
         verification_token -> Nullable<Uuid>,
         token_expires_at -> Nullable<Timestamptz>,
-        created_at -> Nullable<Timestamp>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 

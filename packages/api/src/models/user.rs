@@ -14,7 +14,8 @@ pub struct User {
     pub is_verified: bool,
     pub verification_token: Option<Uuid>,
     pub token_expires_at: Option<DateTime<Utc>>,
-    pub created_at: Option<NaiveDateTime>,
+    pub created_at: NaiveDateTime,
+    pub updated_at: NaiveDateTime,
 }
 
 #[derive(Insertable, Deserialize)]
@@ -25,7 +26,8 @@ pub struct NewUser {
     pub email: String,
     pub phone_number: Option<String>,
     pub password_hash: String,
-    // Note: Removed verification_token and token_expires_at from this struct
+    pub verification_token: Uuid, // Included in the struct for database insertion
+    pub token_expires_at: DateTime<Utc>, // Included in the struct for database insertion
 }
 
 #[derive(Deserialize)]

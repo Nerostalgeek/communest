@@ -3,7 +3,6 @@ use crate::{
     models::user::{CreateUserRequest, NewUser, User},
     schema::users,
 };
-use actix_web::cookie::time::Duration;
 use argon2::{
     password_hash::{rand_core::OsRng, SaltString},
     Argon2, PasswordHasher,
@@ -23,10 +22,7 @@ impl UserService {
         UserService { pool }
     }
 
-    pub async fn create_user(
-        &self,
-        mut request: CreateUserRequest,
-    ) -> Result<User, UserServiceError> {
+    pub async fn create_user(&self, request: CreateUserRequest) -> Result<User, UserServiceError> {
         let mut conn = get_db_connection(self.pool.clone()).await?;
 
         let password_hash = UserService::hash_password(&request.password)
@@ -45,8 +41,7 @@ impl UserService {
         let created_user = diesel::insert_into(users::table)
             .values(new_user)
             .get_result(&mut conn)
-            .map_err(|e| UserServiceError::from(e))?;
-
+            .map_err(UserServiceError::from)?;
         Ok(created_user)
     }
 
