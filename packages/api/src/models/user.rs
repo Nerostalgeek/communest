@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 #[derive(Queryable, Serialize, Deserialize)]
 pub struct User {
-    pub id: Uuid, // Adjusted for UUID
+    pub id: Uuid,
     pub last_name: String,
     pub first_name: String,
     pub email: String,
@@ -26,8 +26,8 @@ pub struct NewUser {
     pub email: String,
     pub phone_number: Option<String>,
     pub password_hash: String,
-    pub verification_token: Uuid, // Included in the struct for database insertion
-    pub token_expires_at: DateTime<Utc>, // Included in the struct for database insertion
+    pub verification_token: Uuid,
+    pub token_expires_at: DateTime<Utc>,
 }
 
 #[derive(Deserialize)]
@@ -36,11 +36,10 @@ pub struct CreateUserRequest {
     pub first_name: String,
     pub email: String,
     pub phone_number: Option<String>,
-    pub password: String, // This is the raw password, which will be hashed in the service layer
+    pub password: String,
 }
-#[derive(Insertable, Deserialize)]
-#[diesel(table_name = users)]
+#[derive(Deserialize)]
 pub struct LoginRequest {
     pub email: String,
-    pub password_hash: String,
+    pub password: String,
 }
