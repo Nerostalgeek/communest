@@ -7,7 +7,7 @@
     },
     "include": [
       "./postcss.config.js",
-      "./vite.config.ts",
+      "src/vite.config.ts",
       "./src/**/*"
     ]
   }

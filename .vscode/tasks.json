@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cargo build --bin=api --features=debug",
+            "type": "shell",
+            "command": "cargo build --bin=api --features=debug --message-format=json",
+            "options": {
+                "cwd": "${workspaceFolder}/packages/api"
+            },
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build"
+        }
+    ]
+}

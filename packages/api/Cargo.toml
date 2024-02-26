@@ -21,3 +21,11 @@ rand = "0.8.5"
 serde = "1.0.196"
 tokio = "1.36.0"
 uuid = { version = "1.7.0", features = ["v4", "serde"] }
+
+
+[features]
+debug = []
+
+
+[alias]
+build-with-dll = "sh -c './copy_dll.ps1 && cargo build'"

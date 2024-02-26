@@ -8,8 +8,19 @@
   "scripts": {
     "start": "npm-run-all --parallel start:*",
     "start:expo": "cd packages/expo && npm start",
-    "start:web": "cd packages/web && npm run dev"
-  },
+    "start:web": "cd packages/web && npm run dev",
+    "api:clean": "cd packages/api && cargo clean",
+    "api:prebuild": "powershell -ExecutionPolicy Bypass -File ./copy_dll.ps1",
+    "api:build:debug": "cd packages/api && cargo build",
+    "api:build:release": "cd packages/api && cargo build --release",
+    "api:start:debug": "cd packages/api && cargo run",
+    "api:start:release": "cd packages/api && cargo run --release",
+    "api:debug": "npm run api:clean && npm run api:prebuild && npm run api:build:debug && npm run api:start:debug",
+    "api:release": "npm run api:clean && npm run api:prebuild && npm run api:build:release && npm run api:start:release",
+    "build:debug": "npm run api:prebuild && npm run api:build:debug",
+    "build:release": "npm run api:prebuild && npm run api:build:release",
+    "postbuild": "echo Build completed"
+  },  
   
   "dependencies": {
     "@communest-monorepo/shared": "0.1.0",
