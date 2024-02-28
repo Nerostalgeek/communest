@@ -21,8 +21,6 @@
     "db:migrate::undo": "cd ./packages/api && diesel migration revert",
     "db:migrate:revert": "cd ./packages/api && diesel migration revert --all",
     "db:migrate:redo": "cd ./packages/api && diesel migration redo",
-    "build:debug": "npm run api:prebuild && npm run api:build:debug",
-    "build:release": "npm run api:prebuild && npm run api:build:release",
     "postbuild": "echo Build completed"
   },  
   

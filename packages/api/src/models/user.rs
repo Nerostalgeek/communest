@@ -11,7 +11,8 @@ pub struct User {
     pub email: String,
     pub phone_number: Option<String>,
     pub password_hash: String,
-    pub is_verified: bool,
+    pub is_activated: bool,
+    pub activation_expires_at: Option<DateTime<Utc>>,
     pub verification_token: Option<Uuid>,
     pub token_expires_at: Option<DateTime<Utc>>,
     pub created_at: NaiveDateTime,
@@ -39,7 +40,11 @@ pub struct CreateUserRequest {
     pub password: String,
 }
 #[derive(Deserialize)]
-pub struct LoginRequest {
+pub struct AuthRequest {
     pub email: String,
     pub password: String,
+}
+#[derive(Serialize)]
+pub struct AuthResponse {
+    pub token: String,
 }

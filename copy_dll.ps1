@@ -3,7 +3,7 @@ $sourceDll = "$projectRoot\dll\libintl-9.dll"
 $destinationDebug = "$projectRoot\packages\api\target\debug"
 $destinationRelease = "$projectRoot\packages\api\target\release"
 
-# Create destination directories if they don't exist (preferred approach)
+# Create destination directories if they don't exist
 If (!(Test-Path $destinationDebug)) {
     New-Item -ItemType Directory -Force -Path $destinationDebug
 }

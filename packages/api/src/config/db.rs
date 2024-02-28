@@ -4,12 +4,10 @@ use std::env;
 use std::sync::Arc;
 use tokio::task;
 
-use crate::services::user_service::UserServiceError;
 pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 pub fn init_database_pool() -> DbPool {
     dotenv::dotenv().ok();
-
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
     let manager = ConnectionManager::<PgConnection>::new(database_url);
@@ -20,10 +18,14 @@ pub fn init_database_pool() -> DbPool {
 
 pub async fn get_db_connection(
     pool: Arc<DbPool>,
-) -> Result<PooledConnection<ConnectionManager<PgConnection>>, UserServiceError> {
+) -> Result<PooledConnection<ConnectionManager<PgConnection>>, DatabaseError> {
     let pool_result = task::spawn_blocking(move || pool.get()).await;
     match pool_result {
         Ok(Ok(connection)) => Ok(connection),
-        Ok(Err(_)) | Err(_) => Err(UserServiceError::DatabaseConnectionPoolError),
+        Ok(Err(_)) | Err(_) => Err(DatabaseError::ConnectionPoolError),
     }
+}
+
+pub enum DatabaseError {
+    ConnectionPoolError,
 }

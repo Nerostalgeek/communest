@@ -25,20 +25,3 @@ pub async fn register_user(
         },
     }
 }
-
-// async fn login_user(login_data: web::Json<LoginRequest>) -> impl Responder {
-//     // Assuming you've retrieved the stored password hash for the user from the database
-//     let stored_password_hash = get_stored_password_hash(&login_data.username);
-
-//     let password_is_valid =
-//         match UserService::verify_password(&stored_password_hash, &login_data.password) {
-//             Ok(valid) => valid,
-//             Err(e) => return HttpResponse::InternalServerError().json("Error verifying password"),
-//         };
-
-//     if password_is_valid {
-//         HttpResponse::Ok().json("User authenticated successfully")
-//     } else {
-//         HttpResponse::Unauthorized().json("Invalid username or password")
-//     }
-// }

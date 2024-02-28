@@ -1,5 +1,5 @@
 use crate::{
-    config::db::{get_db_connection, DbPool},
+    config::db::{get_db_connection, DatabaseError, DbPool},
     models::user::{CreateUserRequest, NewUser, User},
     schema::users,
 };
@@ -57,18 +57,6 @@ impl UserService {
 
         Ok(password_hash)
     }
-
-    // pub fn verify_password(
-    //     hash: &str,
-    //     password: &str,
-    // ) -> Result<bool, argon2::password_hash::Error> {
-    //     let parsed_hash = PasswordHash::new(hash)?;
-    //     let argon2 = Argon2::default();
-
-    //     Ok(argon2
-    //         .verify_password(password.as_bytes(), &parsed_hash)
-    //         .is_ok())
-    // }
 }
 
 pub enum UserServiceError {
@@ -94,15 +82,10 @@ impl From<DieselError> for UserServiceError {
     }
 }
 
-// pub enum AuthResult {
-//     Success { user_id: i32, token: String },
-// }
-
-// pub enum AuthError {
-//     UserNotFound,
-//     IncorrectPassword,
-//     AccountLocked,
-//     AccountNotActivated,
-//     ActivationExpired,
-//     Other(String),
-// }
+impl From<DatabaseError> for UserServiceError {
+    fn from(error: DatabaseError) -> Self {
+        match error {
+            DatabaseError::ConnectionPoolError => UserServiceError::InternalServerError,
+        }
+    }
+}

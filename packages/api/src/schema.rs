@@ -118,7 +118,8 @@ diesel::table! {
         phone_number -> Nullable<Varchar>,
         #[max_length = 255]
         password_hash -> Varchar,
-        is_verified -> Bool,
+        is_activated -> Bool,
+        activation_expires_at -> Nullable<Timestamptz>,
         verification_token -> Nullable<Uuid>,
         token_expires_at -> Nullable<Timestamptz>,
         created_at -> Timestamp,
