@@ -2,8 +2,9 @@ use crate::config::db::{get_db_connection, DatabaseError, DbPool};
 use crate::models::user::AuthRequest;
 use crate::models::user::User;
 use crate::schema::users::dsl::*;
-use crate::utils::jwt::{self, Claims};
+use crate::utils::jwt::{self};
 use argon2::{Argon2, PasswordHash, PasswordVerifier};
+use chrono::Utc;
 use diesel::prelude::*;
 use diesel::result::{DatabaseErrorKind, Error as DieselError};
 use std::sync::Arc;
@@ -45,7 +46,8 @@ impl AuthService {
             }
 
             if let Some(expiration) = user.activation_expires_at {
-                if chrono::Utc::now().naive_utc() > expiration {
+                // Here we compare DateTime<Utc> with the current Utc time directly
+                if Utc::now() > expiration {
                     return Err(AuthServiceError::ActivationExpired);
                 }
             }
@@ -70,7 +72,6 @@ impl AuthService {
 pub enum AuthServiceError {
     UserNotFound,
     IncorrectPassword,
-    AccountLocked,
     AccountNotActivated,
     ActivationExpired,
     InternalServerError,

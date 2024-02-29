@@ -31,7 +31,7 @@ pub struct NewUser {
     pub token_expires_at: DateTime<Utc>,
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct CreateUserRequest {
     pub last_name: String,
     pub first_name: String,
