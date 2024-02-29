@@ -8,6 +8,7 @@ pub struct AppConfig {
 impl AppConfig {
     pub fn new() -> Self {
         dotenv::dotenv().ok();
+        env_logger::init();
 
         let jwt_secret =
             env::var("JWT_SECRET").expect("JWT_SECRET must be set in the environment.");

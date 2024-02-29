@@ -14,7 +14,6 @@ use crate::config::db;
 
 #[actix_web::main]
 async fn main() -> io::Result<()> {
-    env_logger::init();
     // Initialize database pool
     let pool = db::init_database_pool();
     // Initialize AppConfig
@@ -22,8 +21,8 @@ async fn main() -> io::Result<()> {
     // Start HTTP server
     HttpServer::new(move || {
         App::new()
-            .wrap(Logger::default())
             .app_data(web::Data::new(config.clone()))
+            .wrap(Logger::default())
             .app_data(web::Data::new(pool.clone()))
             .configure(routes::config)
     })

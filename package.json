@@ -15,15 +15,16 @@
     "api:build:release": "cd packages/api && cargo build --release",
     "api:start:debug": "cd packages/api && cargo run",
     "api:start:release": "cd packages/api && cargo run --release",
-    "api:debug": "npm run api:clean && npm run api:prebuild && npm run api:build:debug && npm run api:start:debug",
-    "api:release": "npm run api:clean && npm run api:prebuild && npm run api:build:release && npm run api:start:release",
+    "api:debug:windows": "npm run api:clean && npm run api:prebuild && npm run api:build:debug && npm run api:start:debug",
+    "api:debug:linux": "npm run api:clean && npm run api:build:debug && npm run api:start:debug",
+    "api:release:windows": "npm run api:clean && npm run api:prebuild && npm run api:build:release && npm run api:start:release",
+    "api:release:linux": "npm run api:clean && npm run api:build:release && npm run api:start:release",
     "db:migrate": "cd ./packages/api && diesel migration run",
-    "db:migrate::undo": "cd ./packages/api && diesel migration revert",
-    "db:migrate:revert": "cd ./packages/api && diesel migration revert --all",
-    "db:migrate:redo": "cd ./packages/api && diesel migration redo",
+    "db:migration::undo": "cd ./packages/api && diesel migration revert",
+    "db:migration:revert": "cd ./packages/api && diesel migration revert --all",
+    "db:migration:redo": "cd ./packages/api && diesel migration redo",
     "postbuild": "echo Build completed"
-  },  
-  
+  },
   "dependencies": {
     "@communest-monorepo/shared": "0.1.0",
     "react": "^18.2.0"
