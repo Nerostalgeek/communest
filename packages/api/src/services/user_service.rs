@@ -1,9 +1,11 @@
+use crate::config::smtp::SmtpConfig;
 use crate::{
     config::db::{get_db_connection, DatabaseError, DbPool},
     models::user::{CreateUserRequest, NewUser, User},
     schema::users,
     services::email_services::{send_email, EmailContext, EmailServiceError, EmailType},
 };
+use actix_web::web;
 use argon2::{
     password_hash::{rand_core::OsRng, SaltString},
     Argon2, PasswordHasher,
@@ -25,7 +27,11 @@ impl UserService {
         UserService { pool }
     }
 
-    pub async fn create_user(&self, request: CreateUserRequest) -> Result<User, UserServiceError> {
+    pub async fn create_user(
+        &self,
+        request: CreateUserRequest,
+        smtp_config: web::Data<SmtpConfig>,
+    ) -> Result<User, UserServiceError> {
         info!(
             "Attempting to create a new user with email: {}",
             request.email
@@ -63,7 +69,7 @@ impl UserService {
         };
 
         // Send the activation email using the email service.
-        if let Err(e) = send_email(EmailType::Activation, &email_context).await {
+        if let Err(e) = send_email(smtp_config, EmailType::Activation, &email_context).await {
             warn!("Failed to send activation email: {:?}", e);
         }
 

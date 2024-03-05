@@ -1,21 +1,36 @@
-use lettre::{Message, SmtpTransport, Transport};
+use crate::config::smtp::SmtpConfig;
+use lettre::{
+    message::Mailbox, transport::smtp::authentication::Credentials, Message, SmtpTransport,
+    Transport,
+};
+use native_tls::TlsConnector;
 
-pub fn send_activation_email(to: &str, token: &str) -> Result<(), lettre::transport::smtp::Error> {
+pub fn send_activation_email(
+    config: &SmtpConfig,
+    to: &str,
+    token: &str,
+) -> Result<(), lettre::transport::smtp::Error> {
     let email = Message::builder()
-        .from("no-reply@example.com".parse().unwrap())
-        .to(to.parse().unwrap())
+        .from(Mailbox::new(None, "no-reply@example.com".parse().unwrap()))
+        .to(Mailbox::new(None, to.parse().unwrap()))
         .subject("Activation de votre compte")
         .body(format!(
             "Veuillez activer votre compte en utilisant ce token: {}",
             token
-        ))
-        .unwrap();
+        ))?;
 
-    // Pour cet exemple, utilisons un transport SMTP non chiffré vers localhost.
-    // Dans un scénario réel, vous devrez configurer cela pour votre serveur SMTP avec une sécurité appropriée.
-    let mailer = SmtpTransport::unencrypted_localhost();
+    let creds = Credentials::new(config.username.clone(), config.password.clone());
+
+    let tls_connector = TlsConnector::builder()
+        .danger_accept_invalid_certs(true)
+        .build()?;
+
+    let mailer = SmtpTransport::relay(&config.server)?
+        .port(config.port)
+        .credentials(creds)
+        .tls(TransportBuilder::tls_with_parameters(tls_connector))
+        .build();
 
     mailer.send(&email)?;
-
     Ok(())
 }

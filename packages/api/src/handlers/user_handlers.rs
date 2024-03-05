@@ -1,4 +1,5 @@
 use crate::config::db::DbPool;
+use crate::config::smtp::SmtpConfig;
 use crate::models::user::CreateUserRequest;
 use crate::services::user_service::{UserService, UserServiceError};
 use actix_web::{web, HttpResponse, Responder};
@@ -7,12 +8,16 @@ use std::sync::Arc;
 pub async fn register_user(
     pool: web::Data<DbPool>,
     new_user: web::Json<CreateUserRequest>,
+    smtp_config: web::Data<SmtpConfig>,
 ) -> impl Responder {
     info!("Received request to register a new user: {:?}", new_user);
     // This syntax might be used to emphasize that we're cloning the Arc, not the data inside it, but in practice, we can just use Arc::clone(&pool) for clarity.
     let user_service = UserService::new(Arc::clone(&pool));
 
-    match user_service.create_user(new_user.into_inner()).await {
+    match user_service
+        .create_user(new_user.into_inner(), smtp_config)
+        .await
+    {
         Ok(user) => {
             info!("User registered successfully: {}", user.id);
             HttpResponse::Ok().json(user)

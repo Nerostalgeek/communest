@@ -389,6 +389,7 @@ dependencies = [
  "jsonwebtoken",
  "lettre",
  "log",
+ "native-tls",
  "rand",
  "serde",
  "thiserror",

@@ -1,4 +1,3 @@
-// Enums pour représenter les différents types d'e-mails que l'on peut envoyer.
 pub enum EmailType {
     Activation,
     Newsletter,
@@ -13,11 +12,9 @@ pub struct EmailContext {
     // Ajoutez ici d'autres champs selon les besoins de vos e-mails.
 }
 
-// Une erreur personnalisée pour les opérations de service d'e-mail.
 #[derive(Debug)]
 pub enum EmailServiceError {
     SendError(String),
-    // Vous pouvez ajouter d'autres types d'erreurs ici si nécessaire.
 }
 
 impl fmt::Display for EmailServiceError {
@@ -34,17 +31,22 @@ pub mod password_reset;
 use core::fmt;
 
 // Importation des fonctions spécifiques de chaque sous-module.
+use crate::SmtpConfig;
 use activation::send_activation_email;
+use actix_web::web;
 use password_reset::send_password_reset_email;
 
 // La fonction `send_email` qui utilise les types d'e-mails et le contexte pour envoyer l'e-mail approprié.
 pub async fn send_email(
+    smtp_config: web::Data<SmtpConfig>,
     email_type: EmailType,
     context: &EmailContext,
 ) -> Result<(), EmailServiceError> {
     match email_type {
-        EmailType::Activation => send_activation_email(&context.recipient, &context.token)
-            .map_err(|e| EmailServiceError::SendError(e.to_string())),
+        EmailType::Activation => {
+            send_activation_email(&smtp_config, &context.recipient, &context.token)
+                .map_err(|e| EmailServiceError::SendError(e.to_string()))
+        }
         EmailType::Newsletter => {
             // Here you would call `send_newsletter_email` when it's implemented
             // For now, let's return a placeholder error
