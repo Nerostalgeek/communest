@@ -1,6 +1,7 @@
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use config::config::AppConfig;
-use config::smtp::SmtpConfig;
+use config::smtp;
+use lettre::transport::smtp::client::SmtpConnection;
 
 use std::io;
 
@@ -21,17 +22,17 @@ async fn main() -> io::Result<()> {
     let pool = db::init_database_pool();
     // Initialize AppConfig
     let config = AppConfig::new();
-    let smtp = SmtpConfig::new();
+
+    let server_bind_address = config.base_url.clone();
     // Start HTTP server
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(config.clone()))
             .wrap(Logger::default())
-            .app_data(web::Data::new(smtp.clone()))
             .app_data(web::Data::new(pool.clone()))
             .configure(routes::config)
     })
-    .bind("127.0.0.1:8080")?
+    .bind(server_bind_address)?
     .run()
     .await
 }

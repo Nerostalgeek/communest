@@ -29,22 +29,24 @@ pub mod activation;
 pub mod password_reset;
 
 use core::fmt;
+use std::sync::Arc;
 
 // Importation des fonctions spécifiques de chaque sous-module.
-use crate::SmtpConfig;
+
 use activation::send_activation_email;
-use actix_web::web;
 use password_reset::send_password_reset_email;
+use sendgrid::SGClient;
 
 // La fonction `send_email` qui utilise les types d'e-mails et le contexte pour envoyer l'e-mail approprié.
 pub async fn send_email(
-    smtp_config: web::Data<SmtpConfig>,
+    sg_client: Arc<SGClient>,
     email_type: EmailType,
     context: &EmailContext,
 ) -> Result<(), EmailServiceError> {
     match email_type {
         EmailType::Activation => {
-            send_activation_email(&smtp_config, &context.recipient, &context.token)
+            send_activation_email(sg_client, &context.recipient, &context.token)
+                .await
                 .map_err(|e| EmailServiceError::SendError(e.to_string()))
         }
         EmailType::Newsletter => {
@@ -54,7 +56,10 @@ pub async fn send_email(
                 "Newsletter not implemented yet".to_string(),
             ))
         }
-        EmailType::PasswordReset => send_password_reset_email(&context.recipient, &context.token)
-            .map_err(|e| EmailServiceError::SendError(e.to_string())),
+        EmailType::PasswordReset => {
+            send_password_reset_email(sg_client, &context.recipient, &context.token)
+                .await
+                .map_err(|e| EmailServiceError::SendError(e.to_string()))
+        }
     }
 }

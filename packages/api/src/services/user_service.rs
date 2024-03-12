@@ -1,4 +1,3 @@
-use crate::config::smtp::SmtpConfig;
 use crate::{
     config::db::{get_db_connection, DatabaseError, DbPool},
     models::user::{CreateUserRequest, NewUser, User},
@@ -14,6 +13,7 @@ use chrono::{Duration, Utc};
 use diesel::prelude::*;
 use diesel::result::{DatabaseErrorKind, Error as DieselError};
 use log::{error, info, warn};
+use sendgrid::SGClient;
 use std::sync::Arc;
 use thiserror::Error;
 use uuid::Uuid;
@@ -30,7 +30,7 @@ impl UserService {
     pub async fn create_user(
         &self,
         request: CreateUserRequest,
-        smtp_config: web::Data<SmtpConfig>,
+        sg_client: Arc<SGClient>,
     ) -> Result<User, UserServiceError> {
         info!(
             "Attempting to create a new user with email: {}",
@@ -68,9 +68,9 @@ impl UserService {
             token: verification_token.to_string(),
         };
 
-        // Send the activation email using the email service.
-        if let Err(e) = send_email(smtp_config, EmailType::Activation, &email_context).await {
-            warn!("Failed to send activation email: {:?}", e);
+        match send_email(sg_client, EmailType::Activation, &email_context).await {
+            Ok(_) => info!("Activation email sent successfully."),
+            Err(e) => warn!("Failed to send activation email: {:?}", e),
         }
 
         Ok(created_user)
