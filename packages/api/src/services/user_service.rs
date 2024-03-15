@@ -1,19 +1,15 @@
 use crate::{
     config::db::{get_db_connection, DatabaseError, DbPool},
-    models::user::{CreateUserRequest, NewUser, User},
+    models::user::{CreateUserRequest, User},
     schema::users,
-    services::email_services::{send_email, EmailContext, EmailServiceError, EmailType},
 };
-use actix_web::web;
-use argon2::{
-    password_hash::{rand_core::OsRng, SaltString},
-    Argon2, PasswordHasher,
-};
-use chrono::{Duration, Utc};
+use actix_web::HttpResponse;
+
+use diesel::result::Error as DieselError;
+
 use diesel::prelude::*;
-use diesel::result::{DatabaseErrorKind, Error as DieselError};
-use log::{error, info, warn};
-use sendgrid::SGClient;
+use log::error;
+use serde_json::json;
 use std::sync::Arc;
 use thiserror::Error;
 use uuid::Uuid;
@@ -27,61 +23,40 @@ impl UserService {
         UserService { pool }
     }
 
-    pub async fn create_user(
-        &self,
-        request: CreateUserRequest,
-        sg_client: Arc<SGClient>,
-    ) -> Result<User, UserServiceError> {
-        info!(
-            "Attempting to create a new user with email: {}",
-            request.email
-        );
-        let mut conn = get_db_connection(self.pool.clone()).await.map_err(|_| {
-            error!("Failed to get DB connection");
-            UserServiceError::DatabaseConnectionPoolError
-        })?;
-
-        let password_hash = UserService::hash_password(&request.password).map_err(|e| {
-            error!("Password hashing failed: {:?}", e);
-            UserServiceError::InternalServerError
-        })?;
-
-        let verification_token = Uuid::new_v4();
-        let new_user = NewUser {
-            last_name: request.last_name,
-            first_name: request.first_name,
-            email: request.email.clone(),
-            phone_number: request.phone_number,
-            password_hash,
-            verification_token,
-            token_expires_at: Utc::now() + Duration::hours(24),
-        };
-
-        let created_user = diesel::insert_into(users::table)
-            .values(&new_user)
+    pub async fn get_user_by_id(&self, user_id: Uuid) -> Result<User, UserServiceError> {
+        let mut conn = get_db_connection(self.pool.clone()).await?;
+        users::table
+            .find(user_id)
             .get_result::<User>(&mut conn)
-            .map_err(UserServiceError::from)?;
-
-        // Create the email context for sending the activation email.
-        let email_context = EmailContext {
-            recipient: request.email.clone(),
-            token: verification_token.to_string(),
-        };
-
-        match send_email(sg_client, EmailType::Activation, &email_context).await {
-            Ok(_) => info!("Activation email sent successfully."),
-            Err(e) => warn!("Failed to send activation email: {:?}", e),
-        }
-
-        Ok(created_user)
+            .map_err(Into::into)
     }
 
-    pub fn hash_password(password: &str) -> Result<String, argon2::password_hash::Error> {
-        let salt = SaltString::generate(&mut OsRng);
-        let argon2 = Argon2::default();
-        argon2
-            .hash_password(password.as_bytes(), &salt)
-            .map(|hash| hash.to_string())
+    pub async fn get_all_users(&self) -> Result<Vec<User>, UserServiceError> {
+        let mut conn = get_db_connection(self.pool.clone()).await?;
+        users::table.load::<User>(&mut conn).map_err(Into::into)
+    }
+
+    pub async fn update_user(
+        &self,
+        user_id: Uuid,
+        user: CreateUserRequest,
+    ) -> Result<User, UserServiceError> {
+        let mut conn = get_db_connection(self.pool.clone()).await?;
+        let updated_user = diesel::update(users::table.find(user_id))
+            .set((
+                users::last_name.eq(user.last_name),
+                users::first_name.eq(user.first_name),
+                // Update other fields as necessary
+            ))
+            .get_result::<User>(&mut conn)?;
+
+        Ok(updated_user)
+    }
+
+    pub async fn delete_user(&self, user_id: Uuid) -> Result<usize, UserServiceError> {
+        let mut conn = get_db_connection(self.pool.clone()).await?;
+        let user_deleted = diesel::delete(users::table.find(user_id)).execute(&mut conn)?;
+        Ok(user_deleted)
     }
 }
 
@@ -97,25 +72,21 @@ pub enum UserServiceError {
     ValidationError(String),
     #[error("error sending email: {0}")]
     EmailError(String),
-    #[error("internal server error")]
-    ResourceNotFound, // ... other errors ...
+    #[error("user not found")]
+    UserNotFound,
 }
-
-// Remove the manual From<DieselError> implementation to avoid conflict with thiserror's automatic implementation.
 
 impl From<DatabaseError> for UserServiceError {
     fn from(error: DatabaseError) -> Self {
         match error {
-            DatabaseError::ConnectionPoolError => UserServiceError::InternalServerError,
+            DatabaseError::ConnectionPoolError => UserServiceError::DatabaseConnectionPoolError,
+            _ => UserServiceError::DatabaseError(DieselError::RollbackTransaction),
         }
     }
 }
 
-impl From<EmailServiceError> for UserServiceError {
-    fn from(error: EmailServiceError) -> Self {
-        match error {
-            EmailServiceError::SendError(msg) => UserServiceError::EmailError(msg),
-            // Handle other cases as necessary.
-        }
+impl actix_web::ResponseError for UserServiceError {
+    fn error_response(&self) -> HttpResponse {
+        HttpResponse::InternalServerError().json(json!({ "error": self.to_string() }))
     }
 }

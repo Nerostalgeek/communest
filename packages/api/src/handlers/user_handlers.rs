@@ -1,47 +1,72 @@
-use crate::config::config::AppConfig;
-use crate::config::db::DbPool;
+use actix_web::{web, HttpResponse, Responder};
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+
 use crate::models::user::CreateUserRequest;
 use crate::services::user_service::{UserService, UserServiceError};
-use actix_web::{web, HttpResponse, Responder};
-use log::{error, info};
-use std::sync::Arc;
-pub async fn register_user(
-    pool: web::Data<DbPool>,
-    new_user: web::Json<CreateUserRequest>,
-    config: web::Data<AppConfig>, // Pass in the API key for SendGrid
+// This struct could be in a shared module if it's used across multiple handlers.
+#[derive(Serialize, Deserialize)]
+struct ErrorResponse {
+    error: String,
+}
+
+// Handler for getting a single user by ID
+pub async fn get_user(
+    user_id: web::Path<Uuid>,
+    user_service: web::Data<UserService>,
 ) -> impl Responder {
-    info!("Received request to register a new user: {:?}", new_user);
-    let user_service = UserService::new(Arc::clone(&pool));
+    match user_service.get_user_by_id(*user_id).await {
+        Ok(user) => HttpResponse::Ok().json(user),
+        Err(UserServiceError::UserNotFound) => HttpResponse::NotFound().json(ErrorResponse {
+            error: "User not found".to_string(),
+        }),
+        Err(_) => HttpResponse::InternalServerError().json(ErrorResponse {
+            error: "Internal server error".to_string(),
+        }),
+    }
+}
 
-    match user_service
-        .create_user(new_user.into_inner(), config.smtp_client.clone())
-        .await
-    {
-        Ok(user) => {
-            info!("User registered successfully: {}", user.id);
-            HttpResponse::Ok().json(user)
-        }
-        Err(e) => {
-            error!("Error during user registration: {:?}", e);
+// Handler for getting all users
+pub async fn get_users(user_service: web::Data<UserService>) -> impl Responder {
+    match user_service.get_all_users().await {
+        Ok(users) => HttpResponse::Ok().json(users),
+        Err(_) => HttpResponse::InternalServerError().json(ErrorResponse {
+            error: "Internal server error".to_string(),
+        }),
+    }
+}
 
-            // Respond with detailed message in development or generic message in production
-            let is_dev = cfg!(debug_assertions); // True if in debug mode
-            let error_message = if is_dev {
-                format!("{}", e) // In development, show detailed errors
-            } else {
-                "An internal server error occurred".to_string() // In production, show generic error message
-            };
+// Handler for updating a user
+pub async fn update_user(
+    user_id: web::Path<Uuid>,
+    user: web::Json<CreateUserRequest>,
+    user_service: web::Data<UserService>,
+) -> impl Responder {
+    match user_service.update_user(*user_id, user.into_inner()).await {
+        Ok(updated_user) => HttpResponse::Ok().json(updated_user),
+        Err(UserServiceError::UserNotFound) => HttpResponse::NotFound().json(ErrorResponse {
+            error: "User not found".to_string(),
+        }),
+        Err(_) => HttpResponse::InternalServerError().json(ErrorResponse {
+            error: "Internal server error".to_string(),
+        }),
+    }
+}
 
-            match e {
-                UserServiceError::DatabaseConnectionPoolError => {
-                    HttpResponse::ServiceUnavailable().body(error_message)
-                }
-                UserServiceError::ResourceNotFound => HttpResponse::NotFound().body(error_message),
-                UserServiceError::DatabaseError(_) => {
-                    HttpResponse::BadRequest().body(error_message)
-                }
-                _ => HttpResponse::InternalServerError().body(error_message),
-            }
-        }
+// Handler for deleting a user
+pub async fn delete_user(
+    user_id: web::Path<Uuid>,
+    user_service: web::Data<UserService>,
+) -> impl Responder {
+    match user_service.delete_user(*user_id).await {
+        Ok(_) => HttpResponse::Ok().json(ErrorResponse {
+            error: "User deleted successfully".to_string(),
+        }),
+        Err(UserServiceError::UserNotFound) => HttpResponse::NotFound().json(ErrorResponse {
+            error: "User not found".to_string(),
+        }),
+        Err(_) => HttpResponse::InternalServerError().json(ErrorResponse {
+            error: "Internal server error".to_string(),
+        }),
     }
 }

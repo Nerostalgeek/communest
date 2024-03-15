@@ -15,7 +15,7 @@ mod services;
 mod utils;
 
 use crate::config::db;
-
+use crate::routes::v1;
 #[actix_web::main]
 async fn main() -> io::Result<()> {
     // Initialize database pool
@@ -30,7 +30,9 @@ async fn main() -> io::Result<()> {
             .app_data(web::Data::new(config.clone()))
             .wrap(Logger::default())
             .app_data(web::Data::new(pool.clone()))
-            .configure(routes::config)
+            .service(
+                web::scope("/api/v1").configure(v1::init_routes), // Your routes are now scoped to `/api`
+            )
     })
     .bind(server_bind_address)?
     .run()

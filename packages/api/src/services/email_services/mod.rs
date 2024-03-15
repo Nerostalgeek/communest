@@ -1,7 +1,15 @@
+use thiserror::Error;
 pub enum EmailType {
     Activation,
     Newsletter,
     PasswordReset,
+}
+
+#[derive(Error, Debug)]
+pub enum EmailServiceError {
+    #[error("An error occurred while sending an email")]
+    SendError(String),
+    // Add other error variants as needed
 }
 
 // Cette structure représente le contexte nécessaire pour envoyer l'e-mail.
@@ -12,18 +20,6 @@ pub struct EmailContext {
     // Ajoutez ici d'autres champs selon les besoins de vos e-mails.
 }
 
-#[derive(Debug)]
-pub enum EmailServiceError {
-    SendError(String),
-}
-
-impl fmt::Display for EmailServiceError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            EmailServiceError::SendError(err) => write!(f, "Email send error: {}", err),
-        }
-    }
-}
 // Déclaration des sous-modules.
 pub mod activation;
 pub mod password_reset;
