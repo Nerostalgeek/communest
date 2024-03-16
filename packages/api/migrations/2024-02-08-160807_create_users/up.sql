@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS users (
     phone_number VARCHAR(255) UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     is_activated BOOLEAN NOT NULL DEFAULT FALSE,
-    activation_expires_at TIMESTAMPTZ,
-    verification_token UUID,
-    token_expires_at TIMESTAMPTZ,
+    password_reset_token UUID,
+    password_reset_expires_at TIMESTAMPTZ,
+    account_activation_token UUID,
+    account_activation_token_expires_at TIMESTAMPTZ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 )

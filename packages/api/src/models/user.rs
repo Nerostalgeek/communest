@@ -12,9 +12,10 @@ pub struct User {
     pub phone_number: Option<String>,
     pub password_hash: String,
     pub is_activated: bool,
-    pub activation_expires_at: Option<DateTime<Utc>>,
-    pub verification_token: Option<Uuid>,
-    pub token_expires_at: Option<DateTime<Utc>>,
+    pub password_reset_token: Option<Uuid>,
+    pub password_reset_expires_at: Option<DateTime<Utc>>,
+    pub account_activation_token: Option<Uuid>,
+    pub account_activation_token_expires_at: Option<DateTime<Utc>>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
 }
@@ -27,8 +28,8 @@ pub struct NewUser {
     pub email: String,
     pub phone_number: Option<String>,
     pub password_hash: String,
-    pub verification_token: Uuid,
-    pub token_expires_at: DateTime<Utc>,
+    pub account_activation_token: Uuid,
+    pub account_activation_token_expires_at: DateTime<Utc>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -47,4 +48,14 @@ pub struct AuthRequest {
 #[derive(Serialize)]
 pub struct AuthResponse {
     pub token: String,
+}
+#[derive(Deserialize)]
+pub struct PasswordResetRequest {
+    pub email: String,
+}
+
+#[derive(Deserialize)]
+pub struct ValidateResetPasswordRequest {
+    pub token: Uuid,
+    pub new_password: String, // Ensure this is validated for security (e.g., minimum length)
 }

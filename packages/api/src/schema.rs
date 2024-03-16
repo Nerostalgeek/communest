@@ -119,9 +119,10 @@ diesel::table! {
         #[max_length = 255]
         password_hash -> Varchar,
         is_activated -> Bool,
-        activation_expires_at -> Nullable<Timestamptz>,
-        verification_token -> Nullable<Uuid>,
-        token_expires_at -> Nullable<Timestamptz>,
+        password_reset_token -> Nullable<Uuid>,
+        password_reset_expires_at -> Nullable<Timestamptz>,
+        account_activation_token -> Nullable<Uuid>,
+        account_activation_token_expires_at -> Nullable<Timestamptz>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }

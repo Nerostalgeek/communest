@@ -1,6 +1,6 @@
 use crate::config::db::DbPool;
-use crate::models::user::CreateUserRequest;
-use crate::models::user::{AuthRequest, AuthResponse};
+use crate::models::user::{AuthRequest, AuthResponse, ValidateResetPasswordRequest};
+use crate::models::user::{CreateUserRequest, PasswordResetRequest};
 use crate::services::auth_services::{AuthService, AuthServiceError};
 use crate::AppConfig;
 use actix_web::{web, HttpResponse, Responder};
@@ -17,7 +17,7 @@ pub async fn register_user(
     let auth_service = AuthService::new(Arc::clone(&pool));
 
     match auth_service
-        .create_user(new_user.into_inner(), config.smtp_client.clone())
+        .create_user(new_user.into_inner(), config.sendgrid_client.clone())
         .await
     {
         Ok(user) => {
@@ -72,5 +72,47 @@ pub async fn login_user(
             }
             _ => HttpResponse::InternalServerError().finish(),
         },
+    }
+}
+
+pub async fn request_password_reset(
+    pool: web::Data<DbPool>,
+    request: web::Json<PasswordResetRequest>,
+    config: web::Data<AppConfig>,
+) -> impl Responder {
+    let auth_service = AuthService::new(Arc::clone(&pool));
+
+    // Process the password reset request and log any errors internally
+    let result = auth_service
+        .request_password_reset(request.into_inner(), config.sendgrid_client.clone())
+        .await;
+
+    match result {
+        Ok(_) => {
+            // If the operation was successful, you might want to log that as well, or just do nothing.
+            log::info!("Password reset request initiated successfully.");
+        }
+        Err(e) => {
+            // Log the error internally for monitoring or auditing purposes
+            log::error!("Error initiating password reset: {:?}", e);
+        }
+    }
+
+    // Respond with HTTP 200 OK regardless of the outcome to avoid leaking information
+    HttpResponse::Ok().finish()
+}
+
+// Handler to validate the password reset token and set the new password
+pub async fn confirm_password_reset(
+    pool: web::Data<DbPool>,
+    request: web::Json<ValidateResetPasswordRequest>, // This struct needs to be defined
+) -> impl Responder {
+    let service = AuthService::new(Arc::clone(&pool));
+    match service.validate_password_reset(request.into_inner()).await {
+        Ok(_) => HttpResponse::Ok().json("Password has been reset successfully."),
+        Err(e) => {
+            log::error!("Failed to reset password: {:?}", e);
+            HttpResponse::InternalServerError().finish()
+        }
     }
 }

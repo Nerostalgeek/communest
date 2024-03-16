@@ -28,51 +28,51 @@ interface Theme {
 export const theme: Theme = {
   colors: {
     primary: {
-      DEFAULT: '#FF6B6B', // Warm red
-      dark: '#CC5252', // Darker red for dark mode
+      DEFAULT: '#d04848', // Rouge foncé
+      dark: '#a83838', // Rouge plus foncé
     },
     secondary: {
-      DEFAULT: '#FFD93D', // Bright yellow
-      dark: '#CCA63D', // Gold-ish yellow for dark mode
+      DEFAULT: '#f3b95f', // Jaune orangé
+      dark: '#c9934f', // Jaune orangé plus foncé
     },
     accent: {
-      DEFAULT: '#6BCB77', // Soft green
-      dark: '#4C9F6B', // Deeper green for dark mode
+      DEFAULT: '#fde767', // Jaune clair
+      dark: '#c9b856', // Jaune plus foncé
     },
     success: {
-      DEFAULT: '#48BB78', // Green
-      dark: '#38A169', // Darker green for dark mode
+      DEFAULT: '#6895d2', // Bleu moyen
+      dark: '#5073b8', // Bleu plus foncé
     },
     warning: {
       DEFAULT: '#F6AD55', // Orange
-      dark: '#DD6B20', // Darker orange for dark mode
+      dark: '#DD6B20', // Orange plus foncé
     },
     error: {
-      DEFAULT: '#F56565', // Red
-      dark: '#C53030', // Darker red for dark mode
+      DEFAULT: '#F56565', // Rouge
+      dark: '#C53030', // Rouge plus foncé
     },
     info: {
-      DEFAULT: '#63B3ED', // Light blue
-      dark: '#3182CE', // Darker blue for dark mode
+      DEFAULT: '#63B3ED', // Bleu clair
+      dark: '#3182CE', // Bleu plus foncé
     },
     neutral: {
-      DEFAULT: '#B0BEC5', // Neutral grey
-      dark: '#78909C', // Darker grey for dark mode
+      DEFAULT: '#B0BEC5', // Gris neutre
+      dark: '#78909C', // Gris plus foncé
     },
     background: {
-      DEFAULT: '#FFF9F0', // Light cream
-      dark: '#2D3142', // Dark slate
+      DEFAULT: '#FFF9F0', // Crème léger pour l'arrière-plan
+      dark: '#3A3F4B', // Gris bleuté foncé pour le fond sombre
     },
     text: {
-      DEFAULT: '#333333', // Dark grey
-      dark: '#EDEDED', // Light grey
+      DEFAULT: '#333333', // Gris foncé pour le texte
+      dark: '#EDEDED', // Gris clair pour le texte en mode sombre
     },
   },
   spacing: {
     small: 8,
     medium: 16,
     large: 32,
-    // ... other spacings
+    // ... autres espacements
   },
   // ... other theme values
 };
