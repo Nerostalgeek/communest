@@ -1,0 +1,19 @@
+{
+    "extends": "../../tsconfig.json", // Adjust the path to point to your root tsconfig.json
+    "compilerOptions": {
+      "outDir": "./dist", // Specify where to place compiled JS files
+      "rootDir": "./src", // Specify the root directory of input files
+      "noEmit": false, // Override the root setting to enable file emission
+      "declaration": true, // Generate corresponding '.d.ts' file. (optional but useful if you're creating a library)
+      "isolatedModules": false // This can be set to false since we are emitting output
+    },
+    "include": [
+      "src/**/*" // Adjust as needed to include all relevant source files
+    ],
+    "exclude": [
+      "node_modules",
+      "dist",
+      "test",
+      "tests" // Exclude directories as needed
+    ]
+  }

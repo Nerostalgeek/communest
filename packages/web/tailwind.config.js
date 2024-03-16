@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-import { theme } from '@communest-monorepo/shared/src/theme';
+import { theme } from '@communest-monorepo/shared/dist/theme';
+
 export default {
   darkMode: 'media',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],

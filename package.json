@@ -6,10 +6,11 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "npm-run-all --parallel start:*",
-    "start:expo": "cd packages/expo && npm start",
-    "start:web": "cd packages/web && npm i && npm run dev",
-    "build:web": "cd packages/web && npm run build",
+    "prestart": "npm run --prefix ./packages/shared build",
+    "start": "npm run prestart && npm-run-all --parallel start:*",
+    "start:expo": "npm run prestart && cd packages/expo && npm start",
+    "start:web": "npm run prestart && cd packages/web && npm run dev",
+    "build:web": "npm run prestart && cd packages/web && npm run build",
     "api:clean": "cd packages/api && cargo clean",
     "api:prebuild": "powershell -ExecutionPolicy Bypass -File ./copy_dll.ps1",
     "api:build:debug": "cd packages/api && cargo build",
