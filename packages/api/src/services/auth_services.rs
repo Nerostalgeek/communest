@@ -7,7 +7,6 @@ use crate::{
     schema::users,
     services::email_services::{send_email, EmailContext, EmailServiceError, EmailType},
 };
-use actix_web::web;
 use argon2::{
     password_hash::{rand_core::OsRng, SaltString},
     Argon2, PasswordHash, PasswordHasher, PasswordVerifier,
@@ -15,7 +14,7 @@ use argon2::{
 
 use chrono::{Duration, Utc};
 use diesel::prelude::*;
-use diesel::result::{DatabaseErrorKind, Error as DieselError};
+use diesel::result::Error as DieselError;
 use log::{error, info, warn};
 use sendgrid::SGClient;
 use std::sync::Arc;

@@ -1,8 +1,5 @@
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use config::config::AppConfig;
-use config::smtp;
-use lettre::transport::smtp::client::SmtpConnection;
-
 use std::io;
 
 mod config;
@@ -30,9 +27,7 @@ async fn main() -> io::Result<()> {
             .app_data(web::Data::new(config.clone()))
             .wrap(Logger::default())
             .app_data(web::Data::new(pool.clone()))
-            .service(
-                web::scope("/api/v1").configure(v1::init_routes), // Your routes are now scoped to `/api`
-            )
+            .service(web::scope("/api/v1").configure(v1::init_routes))
     })
     .bind(server_bind_address)?
     .run()

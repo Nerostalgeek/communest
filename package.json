@@ -8,7 +8,8 @@
   "scripts": {
     "start": "npm-run-all --parallel start:*",
     "start:expo": "cd packages/expo && npm start",
-    "start:web": "cd packages/web && npm run dev",
+    "start:web": "cd packages/web && npm i && npm run dev",
+    "build:web": "cd packages/web && npm run build",
     "api:clean": "cd packages/api && cargo clean",
     "api:prebuild": "powershell -ExecutionPolicy Bypass -File ./copy_dll.ps1",
     "api:build:debug": "cd packages/api && cargo build",
