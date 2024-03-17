@@ -1,2 +1,85 @@
+# ----- Global rules -----
 node_modules/
+*.log
 .DS_Store
+*.lock
+dist/
+build/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.out/
+.coverage/
+*.tgz
+*.swp
+*.swo
+*.tmp
+*.temp
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.vscode
+
+# ----- Rust/Actix-Web specific (packages/api) -----
+/packages/api/target/
+**/*.rs.bk
+Cargo.lock
+/.env
+**/.env
+# Compiled files
+bin/
+lib/
+# Dependency directories
+**/vendor/
+# FFI generated bindings
+/bindings/
+
+# ----- Web package specific (packages/web) -----
+# Add web-specific rules here. For example:
+public/
+out/
+
+# ----- Shared package specific (packages/shared) -----
+# Add shared-specific rules here. This might include compiled output or any configuration files.
+
+# ----- Mobile App specific (packages/expo) -----
+# Expo/.gitignore content goes here
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# ----- Additional rules if needed -----
