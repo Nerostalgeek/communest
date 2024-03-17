@@ -1,5 +1,7 @@
 use crate::config::db::DbPool;
-use crate::models::user::{AuthRequest, AuthResponse, ValidateResetPasswordRequest};
+use crate::models::user::{
+    ActivateAccountRequest, AuthRequest, AuthResponse, ValidateResetPasswordRequest,
+};
 use crate::models::user::{CreateUserRequest, PasswordResetRequest};
 use crate::services::auth_services::{AuthService, AuthServiceError};
 use crate::AppConfig;
@@ -72,6 +74,21 @@ pub async fn login_user(
             }
             _ => HttpResponse::InternalServerError().finish(),
         },
+    }
+}
+
+pub async fn activate_account(
+    pool: web::Data<DbPool>,
+    request: web::Json<ActivateAccountRequest>,
+) -> impl Responder {
+    let service = AuthService::new(Arc::clone(&pool));
+
+    match service.activate_account(request.into_inner()).await {
+        Ok(_) => HttpResponse::Ok().json("Account has been activated."),
+        Err(e) => {
+            log::error!("Failed to activate account: {:?}", e);
+            HttpResponse::InternalServerError().finish()
+        }
     }
 }
 

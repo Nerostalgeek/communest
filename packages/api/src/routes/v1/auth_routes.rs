@@ -1,5 +1,5 @@
 use crate::handlers::auth_handlers::{
-    confirm_password_reset, login_user, register_user, request_password_reset,
+    activate_account, confirm_password_reset, login_user, register_user, request_password_reset,
 };
 use actix_web::web;
 
@@ -15,6 +15,7 @@ pub fn init_routes(cfg: &mut web::ServiceConfig) {
             .route(
                 "/password-reset/confirm",
                 web::post().to(confirm_password_reset),
-            ),
+            )
+            .route("/activate", web::post().to(activate_account)),
     );
 }

@@ -59,3 +59,8 @@ pub struct ValidateResetPasswordRequest {
     pub token: Uuid,
     pub new_password: String, // Ensure this is validated for security (e.g., minimum length)
 }
+
+#[derive(Deserialize)]
+pub struct ActivateAccountRequest {
+    pub token: Uuid,
+}

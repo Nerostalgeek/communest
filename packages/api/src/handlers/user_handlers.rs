@@ -10,7 +10,6 @@ struct ErrorResponse {
     error: String,
 }
 
-// Handler for getting a single user by ID
 pub async fn get_user(
     user_id: web::Path<Uuid>,
     user_service: web::Data<UserService>,
@@ -26,7 +25,6 @@ pub async fn get_user(
     }
 }
 
-// Handler for getting all users
 pub async fn get_users(user_service: web::Data<UserService>) -> impl Responder {
     match user_service.get_all_users().await {
         Ok(users) => HttpResponse::Ok().json(users),
@@ -36,7 +34,6 @@ pub async fn get_users(user_service: web::Data<UserService>) -> impl Responder {
     }
 }
 
-// Handler for updating a user
 pub async fn update_user(
     user_id: web::Path<Uuid>,
     user: web::Json<CreateUserRequest>,

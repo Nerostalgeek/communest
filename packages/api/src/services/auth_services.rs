@@ -1,5 +1,7 @@
 use crate::config::db::{get_db_connection, DatabaseError, DbPool};
-use crate::models::user::{AuthRequest, PasswordResetRequest, ValidateResetPasswordRequest};
+use crate::models::user::{
+    ActivateAccountRequest, AuthRequest, PasswordResetRequest, ValidateResetPasswordRequest,
+};
 use crate::schema::users::dsl::*;
 use crate::utils::jwt::{self};
 use crate::{
@@ -28,56 +30,6 @@ pub struct AuthService {
 impl AuthService {
     pub fn new(pool: Arc<DbPool>) -> Self {
         AuthService { pool }
-    }
-
-    pub async fn authenticate(
-        &self,
-        auth_details: AuthRequest,
-        jwt_secret: &[u8], // Use &[u8] to match the JWT utility expectations
-    ) -> Result<String, AuthServiceError> {
-        let mut conn = get_db_connection(self.pool.clone()).await?;
-
-        // Correct use of `optional()` to handle possible absence of the user
-        let user = users
-            .filter(email.eq(&auth_details.email))
-            .first::<User>(&mut conn)
-            .optional()?;
-
-        let user = match user {
-            Some(user) => user,
-            None => return Err(AuthServiceError::UserNotFound),
-        };
-
-        // Verifying the password
-        let password_verified =
-            AuthService::verify_password(&user.password_hash, &auth_details.password)?;
-
-        if password_verified {
-            if !user.is_activated {
-                return Err(AuthServiceError::AccountNotActivated);
-            }
-
-            if let Some(expiration) = user.account_activation_token_expires_at {
-                // Here we compare DateTime<Utc> with the current Utc time directly
-                if Utc::now() > expiration {
-                    return Err(AuthServiceError::ActivationExpired);
-                }
-            }
-            let token: String = jwt::generate_jwt(&user.id.to_string(), jwt_secret)?;
-            Ok(token)
-        } else {
-            Err(AuthServiceError::IncorrectPassword)
-        }
-    }
-
-    pub fn verify_password(hash: &str, password: &str) -> Result<bool, AuthServiceError> {
-        let parsed_hash = PasswordHash::new(hash)?;
-        let argon2 = Argon2::default();
-
-        argon2
-            .verify_password(password.as_bytes(), &parsed_hash)
-            .map(|_| true)
-            .map_err(|_| AuthServiceError::PasswordVerificationError)
     }
 
     pub async fn create_user(
@@ -128,6 +80,97 @@ impl AuthService {
         }
 
         Ok(created_user)
+    }
+
+    pub async fn authenticate(
+        &self,
+        auth_details: AuthRequest,
+        jwt_secret: &[u8], // Use &[u8] to match the JWT utility expectations
+    ) -> Result<String, AuthServiceError> {
+        let mut conn = get_db_connection(self.pool.clone()).await?;
+
+        // Correct use of `optional()` to handle possible absence of the user
+        let user = users
+            .filter(email.eq(&auth_details.email))
+            .first::<User>(&mut conn)
+            .optional()?;
+
+        let user = match user {
+            Some(user) => user,
+            None => return Err(AuthServiceError::UserNotFound),
+        };
+
+        // Verifying the password
+        let password_verified =
+            AuthService::verify_password(&user.password_hash, &auth_details.password)?;
+
+        if password_verified {
+            if !user.is_activated {
+                return Err(AuthServiceError::AccountNotActivated);
+            }
+
+            if let Some(expiration) = user.account_activation_token_expires_at {
+                // Here we compare DateTime<Utc> with the current Utc time directly
+                if Utc::now() > expiration {
+                    return Err(AuthServiceError::ActivationExpired);
+                }
+            }
+            let token: String = jwt::generate_jwt(&user.id.to_string(), jwt_secret)?;
+            Ok(token)
+        } else {
+            Err(AuthServiceError::IncorrectPassword)
+        }
+    }
+
+    pub async fn activate_account(
+        &self,
+        request: ActivateAccountRequest,
+    ) -> Result<(), AuthServiceError> {
+        let mut conn = get_db_connection(self.pool.clone()).await.map_err(|_| {
+            error!("Failed to get DB connection");
+            AuthServiceError::DatabaseConnectionPoolError
+        })?;
+
+        let user = users::table
+            .filter(users::account_activation_token.eq(request.token))
+            .first::<User>(&mut conn)
+            .optional()
+            .map_err(|_| AuthServiceError::QueryError)?;
+
+        match user {
+            Some(user) => {
+                if let Some(expiration) = user.account_activation_token_expires_at {
+                    if Utc::now() > expiration {
+                        return Err(AuthServiceError::TokenExpired);
+                    }
+                } else {
+                    return Err(AuthServiceError::InvalidToken);
+                }
+
+                diesel::update(users::table.find(user.id))
+                    .set((
+                        users::is_activated.eq(true),
+                        users::account_activation_token.eq::<Option<Uuid>>(None), // Invalidate the token
+                        users::account_activation_token_expires_at
+                            .eq::<Option<NaiveDateTime>>(None),
+                    ))
+                    .execute(&mut conn)
+                    .map_err(|_| AuthServiceError::QueryError)?;
+
+                Ok(())
+            }
+            None => Err(AuthServiceError::InvalidToken),
+        }
+    }
+
+    pub fn verify_password(hash: &str, password: &str) -> Result<bool, AuthServiceError> {
+        let parsed_hash = PasswordHash::new(hash)?;
+        let argon2 = Argon2::default();
+
+        argon2
+            .verify_password(password.as_bytes(), &parsed_hash)
+            .map(|_| true)
+            .map_err(|_| AuthServiceError::PasswordVerificationError)
     }
 
     pub fn hash_password(password: &str) -> Result<String, AuthServiceError> {
