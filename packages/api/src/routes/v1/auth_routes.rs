@@ -16,6 +16,6 @@ pub fn init_routes(cfg: &mut web::ServiceConfig) {
                 "/password-reset/confirm",
                 web::post().to(confirm_password_reset),
             )
-            .route("/activate", web::post().to(activate_account)),
+            .route("/activate/{token}", web::get().to(activate_account)),
     );
 }

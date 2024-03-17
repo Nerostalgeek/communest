@@ -79,7 +79,7 @@ pub async fn login_user(
 
 pub async fn activate_account(
     pool: web::Data<DbPool>,
-    request: web::Json<ActivateAccountRequest>,
+    request: web::Path<ActivateAccountRequest>,
 ) -> impl Responder {
     let service = AuthService::new(Arc::clone(&pool));
 
