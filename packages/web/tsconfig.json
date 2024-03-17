@@ -6,8 +6,12 @@
       // Add any other web-specific TypeScript options here
     },
     "include": [
-      "./postcss.config.js",
-      "vite.config.ts",
+      "src/**/*.ts", // Include all TypeScript files in src
+      "src/**/*.tsx" // Include all TypeScript JSX files in src
+    ],
+    "exclude": [
+      "vite.config.ts", // Exclude the Vite config file
+      "node_modules" // Commonly excluded to avoid type-checking dependencies
     ]
   }
   

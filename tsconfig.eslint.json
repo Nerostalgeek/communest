@@ -3,5 +3,6 @@
       "packages/web/tailwind.config.js",
       "packages/web/postcss.config.js",
       "packages/web/src/**/*",
-      "packages/shared/src/**/*",    ]
+      "packages/shared/src/**/*"
+    ]
   }

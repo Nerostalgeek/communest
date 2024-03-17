@@ -19,6 +19,7 @@
   },
   "include": [
     "packages/web/src/**/*",
-    "packages/shared/src/**/*"
-, "packages/web/vite.config.ts"  ]
+    "packages/shared/src/**/*",
+    "packages/web/vite.config.ts"
+    ]
 }

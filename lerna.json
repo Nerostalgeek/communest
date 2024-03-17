@@ -1,5 +1,8 @@
 {
   "version": "independent",
-  "packages": ["packages/*"],
+  "hoist": true,
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "npm"
 }

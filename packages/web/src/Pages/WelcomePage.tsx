@@ -1,5 +1,3 @@
-import React from 'react';
-
 const WelcomePage: React.FC = () => {
   // Sample colors array for demonstration purposes
   const colors = [
