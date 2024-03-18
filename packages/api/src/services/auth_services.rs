@@ -1,6 +1,7 @@
 use crate::config::db::{get_db_connection, DatabaseError, DbPool};
 use crate::models::user::{
-    ActivateAccountRequest, AuthRequest, PasswordResetRequest, ValidateResetPasswordRequest,
+    ActivateAccountRequest, AuthRequest, PasswordResetRequest, TokenRefreshRequest, TokenResponse,
+    ValidateResetPasswordRequest,
 };
 use crate::schema::users::dsl::*;
 use crate::utils::jwt::{self};
@@ -274,6 +275,23 @@ impl AuthService {
             None => Err(AuthServiceError::InvalidToken),
         }
     }
+
+    pub async fn refresh_jwt_token(
+        request: TokenRefreshRequest,
+        // Add any additional parameters you need, such as a reference to your token service
+    ) -> Result<TokenResponse, AuthServiceError> {
+        // Validate the refresh token
+        // This usually involves checking it against stored tokens in your database
+        // and ensuring it hasn't expired
+
+        // If valid, generate a new access token (and possibly a new refresh token)
+        let new_access_token = "newly_generated_access_token"; // Placeholder, replace with actual token generation logic
+
+        // Return the new access token to the client
+        Ok(Json(TokenResponse {
+            token: new_access_token.to_string(),
+        }))
+    }
 }
 #[derive(ThisError, Debug)]
 pub enum AuthServiceError {
@@ -311,6 +329,8 @@ pub enum AuthServiceError {
     InvalidToken,
     #[error("Token expired")]
     TokenExpired,
+    #[error("Invalid refresh token")]
+    InvalidRefreshToken,
 }
 
 // Remove the manual From<DieselError> implementation to avoid conflict with thiserror's automatic implementation.

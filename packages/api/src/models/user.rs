@@ -64,3 +64,16 @@ pub struct ValidateResetPasswordRequest {
 pub struct ActivateAccountRequest {
     pub token: Uuid,
 }
+
+#[derive(Deserialize)]
+pub struct TokenRefreshRequest {
+    pub refresh_token: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct TokenResponse {
+    pub token: String,
+    // Optionally include other fields, such as:
+    // pub token_type: String,
+    // pub expires_in: usize,
+}

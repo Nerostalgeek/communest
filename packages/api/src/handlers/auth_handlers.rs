@@ -1,6 +1,7 @@
 use crate::config::db::DbPool;
 use crate::models::user::{
-    ActivateAccountRequest, AuthRequest, AuthResponse, ValidateResetPasswordRequest,
+    ActivateAccountRequest, AuthRequest, AuthResponse, TokenRefreshRequest, TokenResponse,
+    ValidateResetPasswordRequest,
 };
 use crate::models::user::{CreateUserRequest, PasswordResetRequest};
 use crate::services::auth_services::{AuthService, AuthServiceError};
@@ -131,5 +132,22 @@ pub async fn confirm_password_reset(
             log::error!("Failed to reset password: {:?}", e);
             HttpResponse::InternalServerError().finish()
         }
+    }
+}
+
+pub async fn refresh_jtw_token(
+    pool: web::Data<DbPool>,
+    request: web::Json<TokenRefreshRequest>,
+) -> impl Responder {
+    let service = AuthService::new(Arc::clone(&pool));
+    match service
+        .refresh_jwt_token(request.refresh_token.into_inner())
+        .await
+    {
+        Ok(token) => HttpResponse::Ok().json(TokenResponse { token }),
+        Err(e) => match e {
+            AuthServiceError::InvalidRefreshToken => HttpResponse::Unauthorized().finish(),
+            _ => HttpResponse::InternalServerError().finish(),
+        },
     }
 }
