@@ -16,6 +16,10 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@communest/shared": ["./packages/shared/src"]
+    },
+    "baseUrl": ".", 
   },
   "include": [
     "packages/web/src/**/*",

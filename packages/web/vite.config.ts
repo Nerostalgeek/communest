@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from 'tailwindcss';
+import { resolve } from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -10,6 +11,11 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [tailwindcss()],
+    },
+  },
+  resolve: {
+    alias: {
+      '@communest/shared': resolve(__dirname, '../shared/src'), // Adjust the path as necessary
     },
   },
 });

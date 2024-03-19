@@ -1,5 +1,5 @@
 {
-    "extends": "../../tsconfig.json", // Adjust the path to point to your root tsconfig.json
+    "extends": "../../tsconfig.base.json", // Adjust the path to point to your root tsconfig.json
     "compilerOptions": {
       "outDir": "./dist", // Specify where to place compiled JS files
       "rootDir": "./src", // Specify the root directory of input files

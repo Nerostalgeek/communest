@@ -1,8 +1,12 @@
 {
+  "extends": "./tsconfig.base.json",
     "include": [
       "packages/web/tailwind.config.js",
       "packages/web/postcss.config.js",
+      "packages/web/vite.config.js",
       "packages/web/src/**/*",
-      "packages/shared/src/**/*"
+      "packages/shared/src/**/*",
+      "packages/web/**/*", // This line includes all files in the packages/web directory
+
     ]
   }

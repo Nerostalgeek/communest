@@ -138,10 +138,14 @@ pub async fn confirm_password_reset(
 pub async fn refresh_jtw_token(
     pool: web::Data<DbPool>,
     request: web::Json<TokenRefreshRequest>,
+    app_config: web::Data<AppConfig>, // Extract AppConfig to access jwt_secret
 ) -> impl Responder {
     let service = AuthService::new(Arc::clone(&pool));
     match service
-        .refresh_jwt_token(request.refresh_token.into_inner())
+        .refresh_jwt_token(
+            request.into_inner(),
+            app_config.jwt_secret.as_bytes().into(),
+        )
         .await
     {
         Ok(token) => HttpResponse::Ok().json(TokenResponse { token }),

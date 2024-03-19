@@ -1,6 +1,6 @@
 use crate::config::db::{get_db_connection, DatabaseError, DbPool};
 use crate::models::user::{
-    ActivateAccountRequest, AuthRequest, PasswordResetRequest, TokenRefreshRequest, TokenResponse,
+    ActivateAccountRequest, AuthRequest, PasswordResetRequest, TokenRefreshRequest,
     ValidateResetPasswordRequest,
 };
 use crate::schema::users::dsl::*;
@@ -277,20 +277,20 @@ impl AuthService {
     }
 
     pub async fn refresh_jwt_token(
+        &self,
         request: TokenRefreshRequest,
-        // Add any additional parameters you need, such as a reference to your token service
-    ) -> Result<TokenResponse, AuthServiceError> {
+        jwt_secret: Arc<[u8]>, // Assuming the JWT secret is managed by Arc for thread safety
+    ) -> Result<String, AuthServiceError> {
         // Validate the refresh token
-        // This usually involves checking it against stored tokens in your database
-        // and ensuring it hasn't expired
+        let claims = jwt::verify_jwt(&request.refresh_token, &jwt_secret)
+            .map_err(|_| AuthServiceError::InvalidToken)?;
 
-        // If valid, generate a new access token (and possibly a new refresh token)
-        let new_access_token = "newly_generated_access_token"; // Placeholder, replace with actual token generation logic
+        // Assuming the token is valid, generate a new access token
+        let new_access_token = jwt::generate_jwt(&claims.sub, &jwt_secret)
+            .map_err(|e| AuthServiceError::JwtError(e))?;
 
         // Return the new access token to the client
-        Ok(Json(TokenResponse {
-            token: new_access_token.to_string(),
-        }))
+        Ok(new_access_token)
     }
 }
 #[derive(ThisError, Debug)]

@@ -1,16 +1,20 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@communest/shared": ["../shared/src"]
+      },
       "outDir": "./dist",
-      "rootDir": "./src"
       // Add any other web-specific TypeScript options here
     },
     "include": [
       "src/**/*.ts", // Include all TypeScript files in src
-      "src/**/*.tsx" // Include all TypeScript JSX files in src
+      "src/**/*.tsx",
+      "../shared/src", // Optionally include shared package source files if needed for type checking
     ],
     "exclude": [
-      "vite.config.ts", // Exclude the Vite config file
+  
       "node_modules" // Commonly excluded to avoid type-checking dependencies
     ]
   }

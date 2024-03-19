@@ -8,7 +8,7 @@
   "scripts": {
     "prestart": "npm run --prefix ./packages/shared build",
     "start": "npm run prestart && npm-run-all --parallel start:*",
-    "start:expo": "npm run prestart && cd packages/expo && npm start",
+    "mobile:start": "npm run prestart && cd packages/expo && npm start",
     "start:web": "npm run prestart && cd packages/web && npm run dev",
     "build:web": "npm run prestart && cd packages/web && npm run build",
     "api:clean": "cd packages/api && cargo clean",
