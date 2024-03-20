@@ -1,78 +1,52 @@
-type ColorObject = {
-  DEFAULT: string;
+type ColorScheme = {
+  light: string;
   dark: string;
 };
 
+interface ThemeColors {
+  primary: ColorScheme; // Main brand color
+  secondary: ColorScheme; // Supportive brand color
+  accent: ColorScheme; // Accent color for call-to-actions
+  success: ColorScheme; // Success messages and indicators
+  warning: ColorScheme; // Warning messages and indicators
+  error: ColorScheme; // Error messages and indicators
+  info: ColorScheme; // Informational messages and indicators
+  neutral: ColorScheme; // Neutral colors for UI elements
+  background: ColorScheme; // Background color
+  text: ColorScheme; // Text color
+}
+
+interface ThemeSpacing {
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+}
+
 interface Theme {
-  colors: {
-    primary: ColorObject;
-    secondary: ColorObject;
-    accent: ColorObject;
-    success: ColorObject;
-    warning: ColorObject;
-    error: ColorObject;
-    info: ColorObject;
-    neutral: ColorObject;
-    background: ColorObject;
-    text: ColorObject;
-  };
-  spacing: {
-    small: number;
-    medium: number;
-    large: number;
-    // ... other spacings
-  };
-  // ... other theme properties
+  colors: ThemeColors;
+  spacing: ThemeSpacing;
 }
 
 export const theme: Theme = {
   colors: {
-    primary: {
-      DEFAULT: '#d04848', // Rouge foncé
-      dark: '#a83838', // Rouge plus foncé
-    },
-    secondary: {
-      DEFAULT: '#f3b95f', // Jaune orangé
-      dark: '#c9934f', // Jaune orangé plus foncé
-    },
-    accent: {
-      DEFAULT: '#fde767', // Jaune clair
-      dark: '#c9b856', // Jaune plus foncé
-    },
-    success: {
-      DEFAULT: '#6895d2', // Bleu moyen
-      dark: '#5073b8', // Bleu plus foncé
-    },
-    warning: {
-      DEFAULT: '#F6AD55', // Orange
-      dark: '#DD6B20', // Orange plus foncé
-    },
-    error: {
-      DEFAULT: '#F56565', // Rouge
-      dark: '#C53030', // Rouge plus foncé
-    },
-    info: {
-      DEFAULT: '#63B3ED', // Bleu clair
-      dark: '#3182CE', // Bleu plus foncé
-    },
-    neutral: {
-      DEFAULT: '#B0BEC5', // Gris neutre
-      dark: '#78909C', // Gris plus foncé
-    },
-    background: {
-      DEFAULT: '#FFF9F0', // Crème léger pour l'arrière-plan
-      dark: '#3A3F4B', // Gris bleuté foncé pour le fond sombre
-    },
-    text: {
-      DEFAULT: '#333333', // Gris foncé pour le texte
-      dark: '#EDEDED', // Gris clair pour le texte en mode sombre
-    },
+    primary: { light: '#4A90E2', dark: '#1E5A99' },
+    secondary: { light: '#A3D4F7', dark: '#276F9F' },
+    accent: { light: '#E2B13C', dark: '#F29F05' },
+    success: { light: '#50C878', dark: '#3D8B37' },
+    warning: { light: '#FFD700', dark: '#CFA204' },
+    error: { light: '#FF6347', dark: '#D8462F' },
+    info: { light: '#3B9AD9', dark: '#307BA0' },
+    neutral: { light: '#F5F5F5', dark: '#2A2E35' },
+    background: { light: '#FFFFFF', dark: '#121417' },
+    text: { light: '#313639', dark: '#E4E6E9' },
   },
   spacing: {
-    small: 8,
-    medium: 16,
-    large: 32,
-    // ... autres espacements
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 32,
+    xl: 64,
   },
-  // ... other theme values
 };

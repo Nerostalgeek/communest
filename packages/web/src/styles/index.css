@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Define color variables for light and dark modes */
-:root {
-  /* Light mode colors */
-  --color-text-primary-light: #1f2937; /* Dark text for light background */
-  --color-background-light: #f8fafc;   /* Light background */
-
-  /* Dark mode colors */
-  --color-text-primary-dark: #f8fafc;   /* Light text for dark background */
-  --color-background-dark: #1f2937;     /* Dark background */
-  
-}
 
 .logo {
   width: 3rem;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { theme } from '@communest/shared';
 
 interface ButtonProps {
@@ -11,9 +10,9 @@ const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
     <button
       onClick={onClick}
       style={{
-        backgroundColor: theme.colors.primary.DEFAULT,
-        color: theme.colors.text.DEFAULT,
-        padding: `${theme.spacing.small}px ${theme.spacing.medium}px`,
+        backgroundColor: theme.colors.primary,
+        color: theme.colors.text,
+        padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
         border: 'none',
         borderRadius: '4px',
         cursor: 'pointer',
