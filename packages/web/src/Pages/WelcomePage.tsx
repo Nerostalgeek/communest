@@ -1,82 +1,70 @@
-import React from 'react';
+import { useTheme } from '../App';
 import { theme } from '@communest/shared';
-import Card from '../components/Cards/Card';
-import Button from '../components/Buttons/Button';
+import { NavLink } from 'react-router-dom';
 
 const WelcomePage: React.FC = () => {
-  const features = [
-    {
-      name: 'Tasks',
-      description: 'Manage your daily tasks efficiently.',
-      icon: '📋',
-    },
-    {
-      name: 'Events',
-      description: 'Keep track of upcoming family events.',
-      icon: '📅',
-    },
-    {
-      name: 'Chores',
-      description: 'Distribute household chores fairly.',
-      icon: '🧹',
-    },
-    {
-      name: 'Food',
-      description: 'Plan your meals and grocery shopping.',
-      icon: '🍽️',
-    },
-    {
-      name: 'Budget',
-      description: 'Monitor your household expenses.',
-      icon: '💰',
-    },
-  ];
+  const { darkMode } = useTheme();
+
+  // Utilize the theme for styles
+  const containerStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    textAlign: 'center',
+    backgroundColor: darkMode
+      ? theme.colors.background.dark
+      : theme.colors.background.light,
+    color: darkMode ? theme.colors.text.dark : theme.colors.text.light,
+    transition: 'all 0.3s',
+  };
+
+  const buttonStyle: React.CSSProperties = {
+    padding: '10px 20px',
+    margin: '20px',
+    borderRadius: theme.borders.radius.default,
+    backgroundColor: theme.colors.primary.light,
+    color: theme.colors.background.light,
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: 600,
+    boxShadow: theme.shadows.medium,
+    transition: 'background-color 0.3s',
+    textDecoration: 'none',
+  };
+
+  const hoverEffect = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    color: string
+  ) => {
+    (e.target as HTMLAnchorElement).style.backgroundColor = color;
+  };
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      {/* Full-width Banner Section */}
-      <section
-        className="text-center p-20 mb-10"
-        style={{
-          backgroundColor: theme.colors.primary.light,
-          color: theme.colors.text.light,
-        }}
+    <div style={containerStyle}>
+      <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: '0.5em 0' }}>
+        Welcome to Communest
+      </h1>
+      <p style={{ fontSize: '1rem', margin: '0.5em 0' }}>
+        Discover a modern way to manage your property effectively and connect
+        with your community.
+      </p>
+      <NavLink
+        to="/signup"
+        style={buttonStyle}
+        onMouseOver={(e) => hoverEffect(e, theme.colors.primary.dark)}
+        onMouseOut={(e) => hoverEffect(e, theme.colors.primary.light)}
       >
-        <h1 className="text-5xl font-bold mb-6">Welcome to Home Manager</h1>
-        <p>Everything you need to run your home smoothly, all in one place.</p>
-      </section>
-
-      {/* Grid of Feature Cards */}
-      <section className="mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {features.map(({ name, description, icon }, index) => (
-          <Card key={index} title={`${icon} ${name}`}>
-            <p>{description}</p>
-          </Card>
-        ))}
-      </section>
-
-      {/* Call to Action */}
-      <div className="text-center mb-10">
-        <Button
-          label="Get Started"
-          onClick={() => console.log('Navigate to sign up')}
-        />
-      </div>
-
-      {/* Testimonials or Tips Section */}
-      <section
-        className="p-10 rounded-lg"
-        style={{
-          backgroundColor: theme.colors.neutral.light,
-          color: theme.colors.text.light,
-        }}
-      >
-        <h2 className="text-2xl font-bold mb-4">Why Home Manager?</h2>
-        <p>
-          Discover how Home Manager can simplify your daily routines, from
-          tracking tasks to managing expenses.
-        </p>
-      </section>
+        Get Started Today
+      </NavLink>
+      <p>
+        Already have an account?{' '}
+        <NavLink to="/login" style={{ textDecoration: 'underline' }}>
+          Log in
+        </NavLink>
+      </p>
     </div>
   );
 };
