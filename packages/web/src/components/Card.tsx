@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from '../../App';
+import { useTheme } from '../App';
 interface CardProps {
   title: string;
   content: string;

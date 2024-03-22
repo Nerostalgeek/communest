@@ -4,15 +4,19 @@ import { useTheme } from '../App'; // Update this path to the actual location of
 import CommunestLogo from './icons/CommunestLogo';
 
 const Header: React.FC = () => {
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { darkMode, toggleDarkMode, theme } = useTheme();
 
   return (
     <header
       style={{
-        backgroundColor: darkMode ? '#121212' : '#F5F5F5', // Assuming these are your theme's dark and light background colors
-        color: darkMode ? '#E0E0E0' : '#333333', // Assuming these are your theme's dark and light text colors
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        transition: 'background-color 0.3s, color 0.3s', // Smooth transition for theme change
+        backgroundColor: darkMode
+          ? theme.colors.background.dark
+          : theme.colors.background.light, // Assuming these are your theme's dark and light background colors
+        color: darkMode
+          ? theme.colors.primary.dark
+          : theme.colors.primary.light, // Assuming these are your theme's dark and light text colors
+        boxShadow: theme.shadows.default,
+        transition: theme.transitions.default, // Smooth transition for theme change
       }}
       className="shadow-md"
     >

@@ -1,5 +1,5 @@
-import Card from '../components/Cards/Card';
-import Button from '../components/Buttons/Button';
+import Card from '../components/Card';
+import Button from '../components/Button';
 
 const TasksPage = () => {
   return (

@@ -61,6 +61,11 @@ interface ThemeBorders {
   };
 }
 
+interface ThemeTransitions {
+  default: string;
+  // You can add more specific transitions if needed, e.g., for buttons, links, etc.
+}
+
 const utils = {
   convertHexToRGB: (hex: string): string => {
     let r = 0,
@@ -112,6 +117,8 @@ export interface Theme {
   breakpoints: ThemeBreakpoints;
   shadows: ThemeShadows;
   borders: ThemeBorders;
+  transitions: ThemeTransitions; // Add this line
+
   // Utility functions could be included here or imported separately
   utils: typeof utils;
 }
@@ -168,6 +175,10 @@ export const theme: Theme = {
       large: '16px',
       circle: '50%',
     },
+  },
+  transitions: {
+    default: 'background-color 0.3s, color 0.3s',
+    // Here you can add more specific transitions
   },
   utils,
 };
