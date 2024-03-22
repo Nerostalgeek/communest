@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { theme } from '@communest/shared';
-
+import type { Theme } from '@communest/shared';
 // Import your components
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -16,6 +16,7 @@ import WelcomePage from './pages/WelcomePage';
 interface ThemeContextType {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  theme: Theme;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -51,7 +52,7 @@ const App: React.FC = () => {
     localStorage.setItem('darkMode', String(!darkMode));
   };
 
-  const themeContextValue = { darkMode, toggleDarkMode };
+  const themeContextValue = { darkMode, toggleDarkMode, theme };
 
   return (
     <ThemeContext.Provider value={themeContextValue}>

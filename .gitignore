@@ -43,7 +43,7 @@ out/
 
 # ----- Shared package specific (packages/shared) -----
 # Add shared-specific rules here. This might include compiled output or any configuration files.
-
+/packages/shared/dist/
 # ----- Mobile App specific (packages/expo) -----
 # Expo/.gitignore content goes here
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files

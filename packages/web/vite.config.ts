@@ -15,7 +15,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@communest/shared': resolve(__dirname, '../shared/src'), // Adjust the path as necessary
+      '@communest/shared': resolve(__dirname, '../shared/dist'), // Adjust the path as necessary
     },
   },
 });

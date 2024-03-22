@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTheme } from '../../App';
-import { theme } from '@communest/shared';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'accent';
@@ -13,7 +12,7 @@ const Button: React.FC<ButtonProps> = ({
   size = 'medium',
   ...props
 }) => {
-  const { darkMode } = useTheme();
+  const { darkMode, theme } = useTheme();
   const baseStyle = {
     padding:
       size === 'small'

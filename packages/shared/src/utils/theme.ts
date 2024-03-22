@@ -66,6 +66,7 @@ const utils = {
     let r = 0,
       g = 0,
       b = 0;
+
     // 3 digits
     if (hex.length === 4) {
       r = parseInt(hex[1] + hex[1], 16);
@@ -104,7 +105,7 @@ const utils = {
   },
 };
 
-interface Theme {
+export interface Theme {
   colors: ThemeColors;
   spacing: ThemeSpacing;
   typography: ThemeTypography;

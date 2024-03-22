@@ -3,7 +3,7 @@
     "compilerOptions": {
       "baseUrl": ".",
       "paths": {
-        "@communest/shared": ["../shared/src"]
+        "@communest/shared": ["../shared/dist"]
       },
       "outDir": "./dist",
       // Add any other web-specific TypeScript options here
@@ -11,7 +11,7 @@
     "include": [
       "src/**/*.ts", // Include all TypeScript files in src
       "src/**/*.tsx",
-      "../shared/src", // Optionally include shared package source files if needed for type checking
+      "../shared/dist", // Optionally include shared package source files if needed for type checking
     ],
     "exclude": [
   

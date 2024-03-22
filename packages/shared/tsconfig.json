@@ -5,7 +5,9 @@
       "rootDir": "./src", // Specify the root directory of input files
       "noEmit": false, // Override the root setting to enable file emission
       "declaration": true, // Generate corresponding '.d.ts' file. (optional but useful if you're creating a library)
-      "isolatedModules": false // This can be set to false since we are emitting output
+      "declarationMap": true, // Generate a sourcemap for each corresponding '.d.ts' file
+      "isolatedModules": false, // This can be set to false since we are emitting output
+      "allowSyntheticDefaultImports": true
     },
     "include": [
       "src/**/*" // Adjust as needed to include all relevant source files

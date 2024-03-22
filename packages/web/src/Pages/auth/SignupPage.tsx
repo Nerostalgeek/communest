@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../App';
 
-import { theme } from '@communest/shared';
 const SignupPage: React.FC = () => {
-  const { darkMode } = useTheme();
+  const { darkMode, theme } = useTheme();
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
