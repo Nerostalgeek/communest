@@ -1,8 +1,9 @@
 import { useState } from 'react';
+
 import Input from '../../components/Input'; // Adjust the import path as necessary
 import Button from '../../components/Button';
 import Container from '../../components/Container'; // Assuming you have a Container component
-
+import { login } from '@communest/shared';
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,7 +11,7 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     // Implement your login logic here
-    console.log('Login Attempt:', { email, password });
+    await login({ email, password });
   };
 
   return (

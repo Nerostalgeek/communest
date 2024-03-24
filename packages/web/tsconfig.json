@@ -12,6 +12,7 @@
       "src/**/*.ts", // Include all TypeScript files in src
       "src/**/*.tsx",
       "../shared/dist", // Optionally include shared package source files if needed for type checking
+      "src/vite-env.d.ts"
     ],
     "exclude": [
   

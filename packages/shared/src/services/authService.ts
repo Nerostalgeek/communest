@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getApiBaseUrl } from '../utils/config';
 
 // Define the request and response types for better type checking and IntelliSense support
 interface LoginRequest {
@@ -11,7 +12,7 @@ interface AuthResponse {
   // Add any other relevant fields returned by your API
 }
 
-const API_BASE_URL: string = process.env.REACT_APP_API_BASE_URL || ''; // Ensure this is set in your .env file
+const API_BASE_URL = getApiBaseUrl();
 
 export const login = async ({
   email,
@@ -19,7 +20,7 @@ export const login = async ({
 }: LoginRequest): Promise<AuthResponse> => {
   try {
     const response = await axios.post<AuthResponse>(
-      `${API_BASE_URL}/auth/login`,
+      `${API_BASE_URL}/v1/auth/login`,
       { email, password }
     );
     return response.data;
@@ -70,7 +71,7 @@ export const register = async ({
   password,
 }: RegisterRequest): Promise<RegisterResponse> => {
   const response = await axios.post<RegisterResponse>(
-    `${API_BASE_URL}/auth/register`,
+    `${API_BASE_URL}/v1/auth/register`,
     { email, password }
   );
   return response.data;
@@ -79,7 +80,7 @@ export const register = async ({
 // Logout endpoint
 export const logout = async (): Promise<LogoutResponse> => {
   const response = await axios.post<LogoutResponse>(
-    `${API_BASE_URL}/auth/logout`,
+    `${API_BASE_URL}/v1/auth/logout`,
     {}
   );
   return response.data;
@@ -90,8 +91,18 @@ export const refreshToken = async ({
   token,
 }: RefreshTokenRequest): Promise<RefreshTokenResponse> => {
   const response = await axios.post<RefreshTokenResponse>(
-    `${API_BASE_URL}/auth/refresh-token`,
+    `${API_BASE_URL}/v1/auth/refresh-token`,
     { token }
   );
   return response.data;
+};
+
+export type {
+  LoginRequest,
+  AuthResponse,
+  RegisterRequest,
+  RegisterResponse,
+  LogoutResponse,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
 };
