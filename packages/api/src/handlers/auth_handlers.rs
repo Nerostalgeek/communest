@@ -7,7 +7,8 @@ use crate::models::user::{CreateUserRequest, PasswordResetRequest};
 use crate::services::auth_services::{AuthService, AuthServiceError};
 use crate::AppConfig;
 use actix_web::{web, HttpResponse, Responder};
-use log::{error, info};
+use log::{error, info}; // Ensure the `cookie` crate is used for Cookie handling
+use std::convert::Into;
 
 use std::sync::Arc; // Ensure AppConfig is accessible
 
@@ -55,7 +56,7 @@ pub async fn register_user(
 pub async fn login_user(
     pool: web::Data<DbPool>,
     auth_details: web::Json<AuthRequest>,
-    app_config: web::Data<AppConfig>, // Extract AppConfig to access jwt_secret
+    app_config: web::Data<AppConfig>,
 ) -> impl Responder {
     let auth_service = AuthService::new(Arc::clone(&pool));
 
@@ -63,7 +64,16 @@ pub async fn login_user(
         .authenticate(auth_details.into_inner(), app_config.jwt_secret.as_bytes())
         .await
     {
-        Ok(token) => HttpResponse::Ok().json(AuthResponse { token }),
+        Ok(token) => {
+            // Build the actix_web::cookie::Cookie directly
+            let mut cookie = actix_web::cookie::Cookie::new("auth_token", token);
+            cookie.set_path("/");
+            cookie.set_http_only(true);
+            cookie.set_secure(!cfg!(debug_assertions)); // Set secure only in production
+            cookie.set_same_site(actix_web::cookie::SameSite::Strict);
+
+            HttpResponse::Ok().cookie(cookie).finish()
+        }
         Err(e) => match e {
             AuthServiceError::UserNotFound => HttpResponse::NotFound().finish(),
             AuthServiceError::IncorrectPassword => HttpResponse::Unauthorized().finish(),
@@ -77,7 +87,6 @@ pub async fn login_user(
         },
     }
 }
-
 pub async fn activate_account(
     pool: web::Data<DbPool>,
     request: web::Path<ActivateAccountRequest>,

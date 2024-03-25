@@ -1,7 +1,7 @@
 use actix_cors::Cors;
-use actix_web::{middleware::Logger, web, App, HttpServer};
-use config::config::AppConfig;
-use std::{env, io};
+use actix_csrf::Csrf;
+use actix_web::{middleware, web, App, HttpServer};
+use std::io;
 
 mod config;
 mod handlers;
@@ -12,17 +12,19 @@ mod schema;
 mod services;
 mod utils;
 
-use crate::config::db;
+use crate::config::{db, AppConfig};
 use crate::routes::v1;
+
 #[actix_web::main]
 async fn main() -> io::Result<()> {
-    // Initialize database pool
-    let pool = db::init_database_pool();
-    // Initialize AppConfig
+    let pool = db::init_database_pool().await; // Ensure your pool init function is async if it's awaited
     let config = AppConfig::new();
 
     let server_bind_address = config.base_url.clone();
-    // Start HTTP server
+
+    // Ensure you have a secret key for CSRF token generation
+    let csrf_secret_key = b"very_secret_key"; // Should be at least 32 bytes
+
     HttpServer::new(move || {
         let cors = Cors::default()
             .allowed_origin(&config.web_base_url)
@@ -33,10 +35,19 @@ async fn main() -> io::Result<()> {
             ])
             .allowed_header(actix_web::http::header::CONTENT_TYPE)
             .max_age(3600);
+
+        // Configure CSRF middleware
+        let csrf = Csrf::new()
+            .cookie_name("X-CSRF-TOKEN")
+            .secure(true) // Ensure you set to true in production for HTTPS
+            .key(csrf_secret_key)
+            .finish();
+
         App::new()
             .app_data(web::Data::new(config.clone()))
-            .wrap(Logger::default())
+            .wrap(middleware::Logger::default())
             .wrap(cors)
+            .wrap(csrf) // Apply CSRF middleware
             .app_data(web::Data::new(pool.clone()))
             .service(web::scope("/api/v1").configure(v1::init_routes))
     })
