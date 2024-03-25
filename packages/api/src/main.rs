@@ -1,6 +1,7 @@
+use actix_cors::Cors;
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use config::config::AppConfig;
-use std::io;
+use std::{env, io};
 
 mod config;
 mod handlers;
@@ -23,9 +24,19 @@ async fn main() -> io::Result<()> {
     let server_bind_address = config.base_url.clone();
     // Start HTTP server
     HttpServer::new(move || {
+        let cors = Cors::default()
+            .allowed_origin(&config.web_base_url)
+            .allowed_methods(vec!["GET", "POST", "PUT", "DELETE"])
+            .allowed_headers(vec![
+                actix_web::http::header::AUTHORIZATION,
+                actix_web::http::header::ACCEPT,
+            ])
+            .allowed_header(actix_web::http::header::CONTENT_TYPE)
+            .max_age(3600);
         App::new()
             .app_data(web::Data::new(config.clone()))
             .wrap(Logger::default())
+            .wrap(cors)
             .app_data(web::Data::new(pool.clone()))
             .service(web::scope("/api/v1").configure(v1::init_routes))
     })

@@ -10,7 +10,6 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Implement your login logic here
     await login({ email, password });
   };
 

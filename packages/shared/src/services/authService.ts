@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getApiBaseUrl } from '../utils/config';
-
 // Define the request and response types for better type checking and IntelliSense support
 interface LoginRequest {
   email: string;
@@ -12,13 +11,13 @@ interface AuthResponse {
   // Add any other relevant fields returned by your API
 }
 
-const API_BASE_URL = getApiBaseUrl();
-
 export const login = async ({
   email,
   password,
 }: LoginRequest): Promise<AuthResponse> => {
   try {
+    const API_BASE_URL = getApiBaseUrl() + '/api';
+
     const response = await axios.post<AuthResponse>(
       `${API_BASE_URL}/v1/auth/login`,
       { email, password }
@@ -70,6 +69,8 @@ export const register = async ({
   email,
   password,
 }: RegisterRequest): Promise<RegisterResponse> => {
+  const API_BASE_URL = getApiBaseUrl() + '/api';
+
   const response = await axios.post<RegisterResponse>(
     `${API_BASE_URL}/v1/auth/register`,
     { email, password }
@@ -79,6 +80,8 @@ export const register = async ({
 
 // Logout endpoint
 export const logout = async (): Promise<LogoutResponse> => {
+  const API_BASE_URL = getApiBaseUrl() + '/api';
+
   const response = await axios.post<LogoutResponse>(
     `${API_BASE_URL}/v1/auth/logout`,
     {}
@@ -90,6 +93,8 @@ export const logout = async (): Promise<LogoutResponse> => {
 export const refreshToken = async ({
   token,
 }: RefreshTokenRequest): Promise<RefreshTokenResponse> => {
+  const API_BASE_URL = getApiBaseUrl() + '/api';
+
   const response = await axios.post<RefreshTokenResponse>(
     `${API_BASE_URL}/v1/auth/refresh-token`,
     { token }
