@@ -1,7 +1,4 @@
 use actix_cors::Cors;
-use actix_csrf::extractor::Csrf;
-use actix_csrf::CsrfMiddleware;
-
 use actix_web::{middleware, web, App, HttpServer};
 use std::io;
 
@@ -26,7 +23,6 @@ async fn main() -> io::Result<()> {
     let server_bind_address = config.base_url.clone();
 
     // Ensure you have a secret key for CSRF token generation
-    let csrf_secret_key = b"very_secret_key"; // Should be at least 32 bytes
 
     HttpServer::new(move || {
         let cors = Cors::default()
@@ -39,18 +35,10 @@ async fn main() -> io::Result<()> {
             .allowed_header(actix_web::http::header::CONTENT_TYPE)
             .max_age(3600);
 
-        // Configure CSRF middleware
-        let csrf = CsrfMiddleware::new()
-            .cookie_name("X-CSRF-TOKEN")
-            .secure(true) // Ensure you set to true in production for HTTPS
-            .key(csrf_secret_key)
-            .finish();
-
         App::new()
             .app_data(web::Data::new(config.clone()))
             .wrap(middleware::Logger::default())
             .wrap(cors)
-            .wrap(csrf) // Apply CSRF middleware
             .app_data(web::Data::new(pool.clone()))
             .service(web::scope("/api/v1").configure(v1::init_routes))
     })
