@@ -57,7 +57,7 @@ pub struct PasswordResetRequest {
 #[derive(Deserialize)]
 pub struct ValidateResetPasswordRequest {
     pub token: Uuid,
-    pub new_password: String, // Ensure this is validated for security (e.g., minimum length)
+    pub new_password: String, //TODO:  Ensure this is validated for security (e.g., minimum length and stuff like that)
 }
 
 #[derive(Deserialize)]
@@ -76,4 +76,5 @@ pub struct TokenResponse {
     // Optionally include other fields, such as:
     // pub token_type: String,
     // pub expires_in: usize,
+    // Need to put spec on timestamps
 }
