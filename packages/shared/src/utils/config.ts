@@ -6,6 +6,5 @@ export const setApiBaseUrl = (url: string) => {
 };
 
 export const getApiBaseUrl = () => {
-  console.log('inside the functio itself => ', apiBaseUrl);
   return apiBaseUrl;
 };
