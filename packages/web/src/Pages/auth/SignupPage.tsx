@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Input from '../../components/Input'; // Adjust the import path as necessary
+import Input from '../../components/Input'; 
 import Button from '../../components/Button';
-import Container from '../../components/Container'; // Assuming you have a Container component
+import Container from '../../components/Container'; 
 
 const SignupPage: React.FC = () => {
   const [lastName, setLastName] = useState('');
@@ -12,7 +12,6 @@ const SignupPage: React.FC = () => {
 
   const handleSignup = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Implement your sign-up logic here
     console.log('Signup Attempt:', {
       lastName,
       firstName,
