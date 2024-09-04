@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { theme } from '@communest/shared';
 import type { Theme } from '@communest/shared';
-// Import your components
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -10,9 +9,8 @@ import AboutPage from './pages/AboutPage';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import WelcomePage from './pages/WelcomePage';
-// Import other pages or components as needed
 
-// Theme context to provide access to theme settings and toggle function
+
 interface ThemeContextType {
   darkMode: boolean;
   toggleDarkMode: () => void;
@@ -21,7 +19,6 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Custom hook to use theme context
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {
@@ -76,7 +73,6 @@ const App: React.FC = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/about" element={<AboutPage />} />
-              {/* Define more routes as needed */}
             </Routes>
           </main>
           <Footer />
