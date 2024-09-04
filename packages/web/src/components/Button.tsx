@@ -46,11 +46,11 @@ const Button: React.FC<ButtonProps> = ({
     backgroundColor: darkMode
       ? theme.colors[variant].dark
       : theme.colors[variant].light,
-    color: theme.colors.text.light, // Assuming your theme has a 'text' color scheme
+    color: theme.colors.text.light,
     border: 'none',
-    borderRadius: theme.borders.radius.default, // Assuming your theme has a 'borders' definition
+    borderRadius: theme.borders.radius.default,
     cursor: 'pointer',
-    transition: 'background-color 0.3s', // Consider moving this to your theme if you want it customizable
+    transition: 'background-color 0.3s',
   };
 
   return (
