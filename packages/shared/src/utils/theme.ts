@@ -63,7 +63,6 @@ interface ThemeBorders {
 
 interface ThemeTransitions {
   default: string;
-  // You can add more specific transitions if needed, e.g., for buttons, links, etc.
 }
 
 const utils = {
@@ -101,7 +100,7 @@ const utils = {
   darkenColor: (hex: string, percent: number): string => {
     const rgb = utils.convertHexToRGB(hex).match(/\d+/g);
     if (!rgb) {
-      return hex; // Return original hex if conversion fails
+      return hex;
     }
     const [r, g, b] = rgb.map(Number);
     const decrease = (color: number) =>
@@ -117,9 +116,9 @@ export interface Theme {
   breakpoints: ThemeBreakpoints;
   shadows: ThemeShadows;
   borders: ThemeBorders;
-  transitions: ThemeTransitions; // Add this line
+  transitions: ThemeTransitions;
 
-  // Utility functions could be included here or imported separately
+
   utils: typeof utils;
 }
 
@@ -178,7 +177,6 @@ export const theme: Theme = {
   },
   transitions: {
     default: 'background-color 0.3s, color 0.3s',
-    // Here you can add more specific transitions
   },
   utils,
 };
