@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { getApiBaseUrl } from '../utils/config';
-// Define the request and response types for better type checking and IntelliSense support
+
 interface LoginRequest {
   email: string;
   password: string;
 }
 
 interface AuthResponse {
-  token: string; // Adjust according to your actual API response
-  // Add any other relevant fields returned by your API
+  token: string;
 }
 
 export const login = async ({
@@ -26,28 +25,22 @@ export const login = async ({
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error('Login error:', error.response);
-      // Re-throw the error for handling by the caller
       throw error;
     } else {
       console.error('Unexpected error:', error);
-      // Handle or throw a generic error
       throw new Error('An unexpected error occurred');
     }
   }
 };
-
-// Additional interfaces for registration and possibly token refresh
 interface RegisterRequest {
   email: string;
   password: string;
-  // Add any other fields required for registration
 }
 
 interface RefreshTokenRequest {
   token: string;
 }
 
-// Assuming your API returns similar responses for these actions
 interface RegisterResponse {
   user: {
     id: string;
@@ -64,7 +57,6 @@ interface RefreshTokenResponse {
   token: string;
 }
 
-// Registration endpoint
 export const register = async ({
   email,
   password,
@@ -78,7 +70,7 @@ export const register = async ({
   return response.data;
 };
 
-// Logout endpoint
+
 export const logout = async (): Promise<LogoutResponse> => {
   const API_BASE_URL = getApiBaseUrl() + '/api';
 
@@ -89,7 +81,7 @@ export const logout = async (): Promise<LogoutResponse> => {
   return response.data;
 };
 
-// Token refresh endpoint
+
 export const refreshToken = async ({
   token,
 }: RefreshTokenRequest): Promise<RefreshTokenResponse> => {
