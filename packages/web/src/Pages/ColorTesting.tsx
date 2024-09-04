@@ -1,5 +1,4 @@
 const WelcomePage: React.FC = () => {
-  // Sample colors array for demonstration purposes
   const colors = [
     { name: 'Primary', colorClass: 'bg-primary-light dark:bg-primary-dark' },
     {
@@ -7,12 +6,10 @@ const WelcomePage: React.FC = () => {
       colorClass: 'bg-secondary-light dark:bg-secondary-dark',
     },
     { name: 'Accent', colorClass: 'bg-accent-light dark:bg-accent-dark' },
-    // Add more color classes as needed
   ];
 
   return (
     <div className="container mx-auto px-4 py-10">
-      {/* Full-width Banner Section */}
       <section
         className={`${colors[0].colorClass} text-textPrimary-light dark:text-textPrimary-dark text-center p-20 mb-10`}
       >
@@ -20,7 +17,6 @@ const WelcomePage: React.FC = () => {
         <p>Expansive section with a striking color and large text.</p>
       </section>
 
-      {/* Grid of Feature Cards */}
       <section className="mb-10 grid grid-cols-1 md:grid-cols-3 gap-4">
         {colors.map(({ name, colorClass }, index) => (
           <div key={index} className={`${colorClass} p-6 rounded-lg shadow-md`}>
@@ -30,7 +26,6 @@ const WelcomePage: React.FC = () => {
         ))}
       </section>
 
-      {/* Tall Image or Content Section */}
       <section className="bg-background-dark text-textLight p-10 mb-10">
         <div className="h-96 flex items-center justify-center">
           <p>
@@ -40,7 +35,6 @@ const WelcomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Horizontal Scroll Section for Smaller Items */}
       <section className="mb-10 overflow-x-auto whitespace-nowrap p-4 bg-background-light text-textDark">
         <div className="inline-block mr-4">
           <p>Small item 1</p>
@@ -48,10 +42,8 @@ const WelcomePage: React.FC = () => {
         <div className="inline-block mr-4">
           <p>Small item 2</p>
         </div>
-        {/* Additional small items */}
       </section>
 
-      {/* Wide Content Display */}
       <section className="bg-accent text-gray-800 p-10 mb-10">
         <div className="flex justify-between">
           <p>
@@ -61,7 +53,6 @@ const WelcomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Color Blocks */}
 
       <div className="flex flex-wrap gap-4 justify-center items-center mb-8">
         {colors.map(({ name, colorClass }, index) => (
@@ -74,7 +65,6 @@ const WelcomePage: React.FC = () => {
         ))}
       </div>
 
-      {/* Buttons */}
       <div className="flex gap-4 mb-8">
         {colors.map(({ name, colorClass }, index) => (
           <button key={index} className={`${colorClass} py-2 px-4 rounded`}>
@@ -83,7 +73,6 @@ const WelcomePage: React.FC = () => {
         ))}
       </div>
 
-      {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
         {colors.map(({ name, colorClass }, index) => (
           <div key={index} className={`${colorClass} p-4 rounded-lg shadow-lg`}>
@@ -95,7 +84,6 @@ const WelcomePage: React.FC = () => {
         ))}
       </div>
 
-      {/* Larger Square Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {colors.map(({ name, colorClass }, index) => (
           <div key={index} className={`${colorClass} p-6 rounded-lg shadow-xl`}>
