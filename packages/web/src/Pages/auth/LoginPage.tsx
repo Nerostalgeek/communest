@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import Input from '../../components/Input'; // Adjust the import path as necessary
+import Input from '../../components/Input';
 import Button from '../../components/Button';
-import Container from '../../components/Container'; // Assuming you have a Container component
+import Container from '../../components/Container';
 import { login } from '@communest/shared';
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
