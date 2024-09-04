@@ -7,11 +7,11 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ title, content, imageUrl }) => {
-  const { darkMode } = useTheme(); // Using the theme context to determine the mode
+  const { darkMode } = useTheme();
 
-  // Styling with theme integration
+
   const cardStyle: React.CSSProperties = {
-    backgroundColor: darkMode ? '#333333' : '#FFFFFF', // Example theme-based styling
+    backgroundColor: darkMode ? '#333333' : '#FFFFFF',
     color: darkMode ? '#E0E0E0' : '#333333',
     padding: '20px',
     borderRadius: '8px',
@@ -22,7 +22,7 @@ const Card: React.FC<CardProps> = ({ title, content, imageUrl }) => {
   const imageStyle: React.CSSProperties = {
     width: '100%',
     height: 'auto',
-    objectFit: 'cover', // Correctly typed as a specific string literal
+    objectFit: 'cover',
     borderRadius: '8px',
   };
 
